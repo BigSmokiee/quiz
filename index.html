@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primary Health Care & Maternal Care - 100 MCQ Quiz</title>
+    <style>
+        :root {
+            --primary: #1b3b6f;
+            --secondary: #f4b41a;
+            --bg: #f4f6f9;
+            --text: #333;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .question-text {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .option {
+            background-color: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+        .option:hover {
+            background-color: #e8ebf0;
+            border-color: var(--primary);
+        }
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .option.correct {
+            background-color: #2e7d32;
+            color: white;
+            border-color: #2e7d32;
+        }
+        .option.incorrect {
+            background-color: #c62828;
+            color: white;
+            border-color: #c62828;
+        }
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #12284b;
+        }
+        button:disabled {
+            background-color: #9aa5b6;
+            cursor: not-allowed;
+        }
+        .results-container {
+            display: none;
+            text-align: center;
+        }
+        .results-container h2 {
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--bg);
+            border: 8px solid var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 30px auto;
+        }
+        .feedback {
+            margin-top: -15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+        @media (max-width: 600px) {
+            .quiz-container { padding: 20px; }
+            .question-text { font-size: 16px; }
+            .option { padding: 12px 15px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-ui">
+        <div class="header">
+            <h1>Primary Health Care & Maternal Care</h1>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        <div class="question-meta">
+            <span id="q-counter">Question 1 of 100</span>
+            <span id="score-counter">Score: 0</span>
+        </div>
+        <div class="question-text" id="question">Loading question...</div>
+        <div class="options-grid" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="controls">
+            <button id="next-btn" disabled>Next Question</button>
+        </div>
+    </div>
+
+    <div class="quiz-container results-container" id="results-ui">
+        <h2>Quiz Complete!</h2>
+        <div class="score-circle" id="final-score">100%</div>
+        <p style="font-size: 18px; color: #555;">Review your lecture notes and try again to improve your recall.</p>
+        <button onclick="location.reload()" style="margin-top: 20px;">Retake Quiz</button>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "How is health defined by the WHO in its 1948 constitution?", o: ["A state of complete physical, mental and social well-being", "Merely the absence of disease or infirmity", "A state of physical strength and endurance", "The ability to recover quickly from illness"], a: 0 },
+            { q: "What does the neutral point on the Illness-Wellness Continuum represent?", o: ["High-level wellness", "Severe symptoms", "No discernable illness or wellness", "Pre-mature death"], a: 2 },
+            { q: "Which of the following falls under the Wellness Paradium on the Illness-Wellness Continuum?", o: ["Disability", "Awareness, Education, Growth", "Symptoms and Signs", "Treatment"], a: 1 },
+            { q: "Public health is typically divided into epidemiology, biostatistics, and which of the following?", o: ["Occupational therapy", "Health services", "Clinical diagnostics", "Surgical care"], a: 1 },
+            { q: "What is the definition of public health nursing?", o: ["The practice of promoting and preventing the health of population", "The direct bedside care of infectious patients", "The financial management of community hospitals", "The surgical intervention of endemic diseases"], a: 0 },
+            { q: "How is a 'community' defined in the lecture?", o: ["People living in the same country", "Group of people who share common interests and interact", "Individuals working in the same hospital", "Patients suffering from the same disease"], a: 1 },
+            { q: "Which components make up the compose of community?", o: ["Only individuals and groups", "Individuals, groups, family and community", "Families and health workers", "Hospitals, clinics, and patients"], a: 1 },
+            { q: "Community health, as a field of practice, seeks to provide what?", o: ["Organizational structure and collaborative activities", "Strictly individual medical treatments", "Free surgical operations", "National health insurance policies"], a: 0 },
+            { q: "What is Community Health Nursing (CHN) concerned with?", o: ["Delivery of comprehensive nursing care to individual, family, group and population", "Only treating the elderly population", "Performing complex surgeries", "Providing care exclusively in private clinics"], a: 0 },
+            { q: "The philosophy of CHN emphasizes that its use is:", o: ["Strictly curative", "Only rehabilitative", "Preventive rather than curative and rehabilitative", "Focused purely on pharmacological treatment"], a: 2 },
+            { q: "What is rehabilitation?", o: ["A treatment designed to facilitate the process of recovery to as normal a condition as possible", "Able to cure illness immediately", "Presenting health education before illness occurs", "Isolating patients with infectious diseases"], a: 0 },
+            { q: "Which term means 'able to cure illness (diagnosis + treatment by use nursing care)'?", o: ["Rehabilitation", "Prevention", "Curative", "Promotion"], a: 2 },
+            { q: "Activities and practices aimed at anticipating, avoiding, and removing possible causes are called:", o: ["Curative", "Prevention", "Rehabilitation", "Tertiary care"], a: 1 },
+            { q: "What does primordial prevention involve?", o: ["Treatment after disease onset", "Present health education before illness occurs", "Isolation of contagious patients", "Physical therapy and recovery"], a: 1 },
+            { q: "What does primary prevention involve?", o: ["Present health education after illness occurs", "Diagnosis and medication", "Surgical intervention", "Complete isolation"], a: 0 },
+            { q: "Secondary prevention consists of which of the following?", o: ["Education only", "Isolation only", "Diagnosis + treatment + screen + control", "Physical rehabilitation only"], a: 2 },
+            { q: "Which level of prevention is associated with 'isolation'?", o: ["Primordial", "Primary", "Secondary", "Tertiary"], a: 3 },
+            { q: "Which of the following is one of the Aims/Philosophy of CHN?", o: ["To prevent and control diseases and disabilities", "To increase hospital admission rates", "To limit healthcare to the wealthy", "To focus solely on experimental treatments"], a: 0 },
+            { q: "According to the Aims of CHN, it seeks to promote:", o: ["Illness and dependency", "Health and efficiency", "Hospital stays", "Isolation procedures"], a: 1 },
+            { q: "How does CHN aim to prolong life?", o: ["By providing need based, well balanced comprehensive health care services", "By eliminating all physical labor", "By prescribing antibiotics to everyone", "By keeping everyone in isolation"], a: 0 },
+            { q: "Which of the following involves the health of the 'whole nation'?", o: ["Community health", "Public health", "Family health", "Individual health"], a: 1 },
+            { q: "Which of the following involves the health of a 'specific community'?", o: ["Public health", "Community health", "Global health", "National health"], a: 1 },
+            { q: "Public health protects the health of:", o: ["Everyone", "Only those in a particular community", "Only those who pay for it", "Only children"], a: 0 },
+            { q: "Community health protects the health of:", o: ["Everyone in the world", "All of those in a particular community", "Only hospitalized patients", "Only elderly citizens"], a: 1 },
+            { q: "Which branch gives free health care to individuals?", o: ["Private health", "Community health", "Public health", "Corporate health"], a: 2 },
+            { q: "Which branch keeps the food, water supply and general environment healthy for the community?", o: ["Public health", "Community health", "Individual medicine", "Clinical diagnostics"], a: 1 },
+            { q: "What is defined as the first level of contact with the health system to promote health and prevent illness?", o: ["Tertiary Health Care", "Secondary Health Care", "Primary Health Care", "Specialized Care"], a: 2 },
+            { q: "In the essential elements of PHC (ELEMENTS), what does the first 'E' stand for?", o: ["Emergency services", "Education concerning prevailing health problems", "Epidemiological studies", "Environmental sanitation"], a: 1 },
+            { q: "What does the 'L' in the essential elements of PHC stand for?", o: ["Local hospital construction", "Locally endemic disease prevention and control", "Laboratory testing", "Life support systems"], a: 1 },
+            { q: "What does the second 'E' in the essential elements of PHC stand for?", o: ["Expanded program of immunization", "Emergency room operations", "Economic support", "Elderly care"], a: 0 },
+            { q: "What does the 'M' in the essential elements of PHC stand for?", o: ["Medical equipment", "Maternal and child health care including family planning", "Mental health asylums", "Mortality tracking"], a: 1 },
+            { q: "What does the third 'E' in the essential elements of PHC stand for?", o: ["Endemic control", "Expanded training", "Essential drugs arrangement", "Emergency transportation"], a: 2 },
+            { q: "What does the 'N' in the essential elements of PHC stand for?", o: ["National health policies", "Nutritional food supplement", "Nursing education", "Neonatal intensive care"], a: 1 },
+            { q: "What does the 'T' in the essential elements of PHC stand for?", o: ["Treatment of communicable and non-communicable disease", "Transportation of patients", "Testing of water supplies", "Training of doctors"], a: 0 },
+            { q: "What does the 'S' in the essential elements of PHC stand for?", o: ["Surgical operations", "Safe water and sanitation", "Specialized medicine", "School health programs"], a: 1 },
+            { q: "How is a 'family' defined in the lecture?", o: ["People living in the same city", "A group of two or more persons related by birth, marriage, or adoption", "Co-workers sharing an office", "A group of friends"], a: 1 },
+            { q: "What does 'Family health' include?", o: ["Only the physical health of parents", "Promotion and maintenance of physical, mental, spiritual and social health for the family unit", "Only the financial stability of the household", "Only the medical records of the children"], a: 1 },
+            { q: "Which nursing discipline is concerned with family structure, development, functions and health services?", o: ["Public Health Nursing", "Family Health Care Nursing", "Surgical Nursing", "Occupational Nursing"], a: 1 },
+            { q: "A family consisting of a two-generation relationship of parents and children living together is a:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 1 },
+            { q: "A family formed when parents bring unrelated children from a prior marriage into a new family is a:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 0 },
+            { q: "A nuclear family and their close relatives (grandparents, aunts, uncles) living together is an:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 2 },
+            { q: "A lone parent and offspring living together as a family unit is a:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 3 },
+            { q: "Which of the following is a way Community Health Nurses help families?", o: ["Providing direct care", "Prescribing heavy narcotics", "Performing complex surgeries", "Revoking health insurance"], a: 0 },
+            { q: "Another way Community Health Nurses help families is by:", o: ["Creating barriers to services", "Removing barriers to needed services", "Isolating them from the community", "Refusing to provide health education"], a: 1 },
+            { q: "Community Health Nurses aim to improve the capacity of the family to:", o: ["Act on its own behalf and assume responsibility", "Rely entirely on hospital staff", "Ignore health warnings", "Avoid medical facilities"], a: 0 },
+            { q: "Family members' age and maturational level fall under which family assessment consideration?", o: ["Biophysical considerations", "Psychological considerations", "Sociocultural considerations", "Behavioral considerations"], a: 0 },
+            { q: "Communication patterns and coping abilities fall under which family assessment consideration?", o: ["Biophysical", "Psychological", "Physical environmental", "Health system"], a: 1 },
+            { q: "Home environment and safety hazards fall under which family assessment consideration?", o: ["Sociocultural", "Psychological", "Physical environmental", "Behavioral"], a: 2 },
+            { q: "Roles, culture, and religion fall under which family assessment consideration?", o: ["Biophysical", "Sociocultural", "Physical environmental", "Health system"], a: 1 },
+            { q: "Consumption patterns, rest, and sleep fall under which family assessment consideration?", o: ["Behavioral", "Sociocultural", "Psychological", "Health system"], a: 0 },
+            { q: "Family response to illness and use of health care services fall under which consideration?", o: ["Biophysical", "Behavioral", "Health system", "Physical environmental"], a: 2 },
+            { q: "What is Community Assessment?", o: ["A process to compile data regarding a community's health status and resources", "A test given to nursing students", "A financial audit of a local hospital", "A survey of doctor's salaries"], a: 0 },
+            { q: "Which community assessment approach focuses specifically on community health problems?", o: ["Population assessment approach", "Need assessment approach", "Windshield survey", "Subsystem assessment"], a: 1 },
+            { q: "Which community assessment approach provides an overall picture of community health status?", o: ["Need assessment approach", "Problem-Oriented Assessment", "Population assessment approach", "Epidemiologic study"], a: 2 },
+            { q: "Which survey involves studying data already available on a community?", o: ["Comprehensive Assessment", "Familiarization or Windshield Survey", "Focus Group", "Problem-Oriented Assessment"], a: 1 },
+            { q: "Which assessment begins with a single issue and assesses the community in terms of that issue?", o: ["Problem-Oriented Assessment", "Comprehensive Assessment", "Windshield Survey", "Population Assessment"], a: 0 },
+            { q: "Which assessment focuses on a single dimension of community life, like surveying religious organizations?", o: ["Community Subsystem Assessment", "Comprehensive Assessment", "Need Assessment", "Epidemiologic Study"], a: 0 },
+            { q: "Which assessment seeks to discover ALL relevant community health information by reviewing all existing data?", o: ["Windshield Survey", "Problem-Oriented Assessment", "Community Subsystem Assessment", "Comprehensive Assessment"], a: 3 },
+            { q: "An assessment method in which a series of questions is used to collect data for a specific group is a:", o: ["Survey", "Focus group", "Descriptive study", "Town hall meeting"], a: 0 },
+            { q: "Which method examines the amount and distribution of a disease in a population?", o: ["Community Forums", "Descriptive Epidemiologic Studies", "Windshield Survey", "Focus Group"], a: 1 },
+            { q: "Which qualitative assessment method is designed to obtain community opinions in a large setting?", o: ["Epidemiologic Studies", "Surveys", "Community Forums or Town Hall Meetings", "Windshield Survey"], a: 2 },
+            { q: "Which method is designed to obtain grassroots opinion in a smaller, targeted setting?", o: ["Descriptive Studies", "Focus Group", "Comprehensive Assessment", "Vital Statistics"], a: 1 },
+            { q: "Community members, formal leaders, and informal leaders are examples of which data source?", o: ["Secondary", "Primary", "International", "Tertiary"], a: 1 },
+            { q: "Health team members, client records, and vital statistics are examples of which data source?", o: ["Primary", "Secondary", "International", "National"], a: 1 },
+            { q: "The World Health Organization (WHO) and its six regional offices are examples of which data source?", o: ["Primary", "Secondary", "International", "Local"], a: 2 },
+            { q: "What is the FIRST stage of community assessment?", o: ["Analyze information", "Data collection", "Implementation", "Evaluation"], a: 1 },
+            { q: "What is the SECOND stage of community assessment?", o: ["Data collection", "Establish a work plan", "Analyze information", "Implementation"], a: 2 },
+            { q: "What is the THIRD stage of community assessment?", o: ["Evaluation", "Analyze information", "Establish a work plan and schedule", "Data collection"], a: 2 },
+            { q: "What is the FOURTH stage of community assessment?", o: ["Implementation", "Evaluation", "Data collection", "Analyze information"], a: 0 },
+            { q: "What is the FIFTH and final stage of community assessment?", o: ["Implementation", "Establish a work plan", "Data collection", "Evaluation"], a: 3 },
+            { q: "Health education is the process by which individuals learn to Promote, Maintain, and:", o: ["Ignore health", "Restore health", "Diagnose illnesses", "Perform surgery"], a: 1 },
+            { q: "Health Education is considered the primary and dominant measure in:", o: ["Surgical operations", "Health Promotion", "Pharmacology", "Tertiary care"], a: 1 },
+            { q: "One objective of health education is to help people achieve health by:", o: ["Relying entirely on doctors", "Their own sources, activities", "Buying expensive equipment", "Moving to a different country"], a: 1 },
+            { q: "Health education aims to develop the sense of responsibilities for improvement of health of:", o: ["Hospitals and clinics", "Individuals & families", "The government only", "Insurance companies"], a: 1 },
+            { q: "Health education aims to develop scientific knowledge, attitude, and skill to develop:", o: ["Correct habits", "Medical degrees", "Surgical precision", "Hospital policies"], a: 0 },
+            { q: "Health education aims to alter behavior because:", o: ["It is fun", "It may lead them to cause disease", "It reduces hospital profits", "It forces them to buy medication"], a: 1 },
+            { q: "What is the FIRST step in the process of Health Education?", o: ["Establish Educational Goals", "Select Appropriate Methods", "Identify Educational Needs", "Developing Effective Programs"], a: 2 },
+            { q: "What is the SECOND step in the process of Health Education?", o: ["Identify Educational Needs", "Establish Educational Goals and Objectives", "Skills of the Effective Educator", "Select Appropriate Methods"], a: 1 },
+            { q: "What is the THIRD step in the process of Health Education?", o: ["Select Appropriate Educational Methods", "Identify Needs", "Establish Goals", "Developing Programs"], a: 0 },
+            { q: "Difficulty in hearing and expression is an example of which barrier to health education?", o: ["Physiological barriers", "Psychological barriers", "Environmental barriers", "Cultural barriers"], a: 0 },
+            { q: "Emotional disturbance, neurosis, and depressive states are examples of which barrier?", o: ["Physiological", "Psychological", "Environmental", "Cultural"], a: 1 },
+            { q: "Noise and congestion are examples of which barrier to health education?", o: ["Physiological", "Psychological", "Environmental", "Cultural"], a: 2 },
+            { q: "Level of knowledge, religion, and belief are examples of which barrier?", o: ["Physiological", "Psychological", "Environmental", "Cultural"], a: 3 },
+            { q: "Which of the following is a setting for health education listed in the lecture?", o: ["Space stations", "School", "Underwater labs", "Deserted islands"], a: 1 },
+            { q: "Providing education at health fairs about diet, exercise, or environmental hazards is an example of:", o: ["Primary Prevention", "Secondary Prevention", "Tertiary Prevention", "Quaternary Prevention"], a: 0 },
+            { q: "Providing education and health screenings for early diagnosis (like diabetes) is an example of:", o: ["Primary Prevention", "Secondary Prevention", "Tertiary Prevention", "Primordial Prevention"], a: 1 },
+            { q: "Providing education in rehabilitation centers to teach amputees ways to increase functioning is an example of:", o: ["Primary Prevention", "Secondary Prevention", "Tertiary Prevention", "Primordial Prevention"], a: 2 },
+            { q: "The three main levels of Teaching Methods for Health Education are Individual Approach, Group Approach, and:", o: ["Surgical Approach", "General Approach / Mass Approach", "Clinical Approach", "Laboratory Approach"], a: 1 },
+            { q: "In the Individual Approach, the topic selected should be:", o: ["The same for everyone", "Relevant to the situation", "Highly advanced medical science", "Unrelated to the patient's condition"], a: 1 },
+            { q: "Personal contact, home visits, and personal letters are methods used in:", o: ["Mass Media", "Group Teaching", "Tertiary Prevention", "Environmental modification"], a: 1 },
+            { q: "In Group Health Education, the choice of subject must relate directly to:", o: ["The interest of the group", "The national news", "The hospital's financial needs", "The nurse's personal hobbies"], a: 0 },
+            { q: "Which of the following is a 'One-way or didactic method' of group teaching?", o: ["Group discussion", "Role playing", "Lecture", "Workshop"], a: 2 },
+            { q: "Which of the following is a 'Two-way or Socratic Method' of group teaching?", o: ["Films", "Charts", "Flashcards", "Group discussion"], a: 3 },
+            { q: "Posters, health magazines, television, and radio are employed for which approach?", o: ["Individual Approach", "Mass Approach", "Didactic Approach", "Socratic Approach"], a: 1 },
+            { q: "Compared to individual or group methods, mass media are generally:", o: ["More effective in changing human behaviors", "Less effective in changing human behaviors", "Exactly the same in effectiveness", "Only effective for surgical patients"], a: 1 },
+            { q: "Maternal Care encompasses the health of women during pregnancy, childbirth, and the:", o: ["Pre-adolescent period", "Postpartum period", "Menopausal period", "Childhood period"], a: 1 },
+            { q: "Maternal and Child health refers to promotive, preventive, curative, and rehabilitative care and includes:", o: ["Geriatric care", "Handicapped children and adolescence", "Occupational hazards for men", "Sports medicine"], a: 1 },
+            { q: "Pregnancy is divided into three trimesters, each lasting for approximately:", o: ["1 month", "2 months", "3 months", "4 months"], a: 2 },
+            { q: "During the first two trimesters (from 1st to 28th week), how often should antenatal visits occur?", o: ["Weekly", "Fortnightly", "Monthly", "Daily"], a: 2 },
+            { q: "From the 28th week to the 36th week of pregnancy, how often should visits occur?", o: ["Weekly", "Fortnightly (every two weeks)", "Monthly", "Once a trimester"], a: 1 },
+            { q: "From the 36th week to delivery, how often should antenatal visits occur?", o: ["Weekly", "Fortnightly", "Monthly", "Never"], a: 0 },
+            { q: "Which age group is considered a maternal risk factor?", o: ["Mothers aged 20 to 30 years", "Mothers aged less than 17 years and over 35 years", "Mothers aged 25 to 34 years", "Mothers aged exactly 30 years"], a: 1 },
+            { q: "Which of the following is considered a maternal risk factor?", o: ["Drinking enough water", "Multipartum mothers (having multiple previous births)", "Exercising lightly", "Taking prenatal vitamins"], a: 1 },
+            { q: "Care provided to pregnant women from conception and through the three trimesters is called:", o: ["Intranatal care", "Antenatal care", "Postnatal care", "Neonatal care"], a: 1 },
+            { q: "During antenatal care, the first dose of the tetanus toxoid vaccine should be given at:", o: ["4-8 weeks", "16-20 weeks", "28-32 weeks", "36-40 weeks"], a: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        const uiElements = {
+            quiz: document.getElementById('quiz-ui'),
+            results: document.getElementById('results-ui'),
+            question: document.getElementById('question'),
+            options: document.getElementById('options'),
+            nextBtn: document.getElementById('next-btn'),
+            progress: document.getElementById('progress'),
+            qCounter: document.getElementById('q-counter'),
+            scoreCounter: document.getElementById('score-counter'),
+            feedback: document.getElementById('feedback'),
+            finalScore: document.getElementById('final-score')
+        };
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            uiElements.question.textContent = `${currentQuestion + 1}. ${q.q}`;
+            uiElements.qCounter.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            uiElements.progress.style.width = `${((currentQuestion) / quizData.length) * 100}%`;
+            uiElements.feedback.textContent = "";
+            uiElements.nextBtn.disabled = true;
+            selectedOption = null;
+
+            uiElements.options.innerHTML = '';
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.textContent = opt;
+                btn.onclick = () => selectOption(index, btn);
+                uiElements.options.appendChild(btn);
+            });
+        }
+
+        function selectOption(index, btnElement) {
+            if (selectedOption !== null) return;
+            
+            selectedOption = index;
+            const correctIndex = quizData[currentQuestion].a;
+            const options = document.querySelectorAll('.option');
+            
+            if (index === correctIndex) {
+                btnElement.classList.add('correct');
+                uiElements.feedback.textContent = "Correct!";
+                uiElements.feedback.style.color = "#2e7d32";
+                score++;
+                uiElements.scoreCounter.textContent = `Score: ${score}`;
+            } else {
+                btnElement.classList.add('incorrect');
+                options[correctIndex].classList.add('correct');
+                uiElements.feedback.textContent = "Incorrect.";
+                uiElements.feedback.style.color = "#c62828";
+            }
+            
+            uiElements.nextBtn.disabled = false;
+        }
+
+        uiElements.nextBtn.addEventListener('click', () => {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            uiElements.quiz.style.display = 'none';
+            uiElements.results.style.display = 'block';
+            const percentage = Math.round((score / quizData.length) * 100);
+            uiElements.finalScore.textContent = `${percentage}%`;
+            
+            let color = "#c62828";
+            if (percentage >= 80) color = "#2e7d32";
+            else if (percentage >= 60) color = "var(--secondary)";
+            
+            uiElements.finalScore.style.borderColor = color;
+            uiElements.finalScore.style.color = color;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
