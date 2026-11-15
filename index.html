@@ -3,389 +3,855 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Primary Health Care & Maternal Care - 100 MCQ Quiz</title>
+    <title>Pediatric Nursing Comprehensive 100-Question MCQ Quiz</title>
     <style>
         :root {
-            --primary: #1b3b6f;
-            --secondary: #f4b41a;
-            --bg: #f4f6f9;
-            --text: #222222;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
         }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            line-height: 1.5;
+            padding: 1rem;
         }
-        .quiz-container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            width: 100%;
+
+        .container {
             max-width: 800px;
-            padding: 40px;
-            box-sizing: border-box;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
         }
-        .header {
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
             text-align: center;
-            margin-bottom: 30px;
         }
-        .header h1 {
-            color: var(--primary);
-            margin: 0 0 10px 0;
-            font-size: 24px;
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
-        .progress-bar {
+
+        header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .quiz-body {
+            padding: 1.5rem;
+        }
+
+        .progress-container {
+            background: var(--border);
+            border-radius: 999px;
+            height: 10px;
             width: 100%;
-            height: 8px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
             overflow: hidden;
         }
-        .progress-fill {
+
+        .progress-bar {
+            background: var(--primary);
             height: 100%;
-            background-color: var(--secondary);
             width: 0%;
             transition: width 0.3s ease;
         }
-        .question-meta {
+
+        .quiz-info {
             display: flex;
             justify-content: space-between;
-            color: #555;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .question-text {
-            font-size: 18px;
-            line-height: 1.5;
-            margin-bottom: 25px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
             font-weight: 600;
-            color: #111;
         }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 30px;
+
+        .question-card {
+            display: none;
         }
-        .option {
-            background-color: #eef2f7;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 16px;
-            color: #1e293b;
-            font-weight: 500;
-            text-align: left;
+
+        .question-card.active {
+            display: block;
         }
-        .option:hover {
-            background-color: #e2e8f0;
-            border-color: var(--primary);
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: var(--text);
         }
-        .option.selected {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        .option.correct {
-            background-color: #2e7d32 !important;
-            color: white !important;
-            border-color: #2e7d32 !important;
-        }
-        .option.incorrect {
-            background-color: #c62828 !important;
-            color: white !important;
-            border-color: #c62828 !important;
-        }
-        .controls {
+
+        .options-list {
             display: flex;
-            justify-content: flex-end;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
         }
-        button#next-btn {
-            background-color: var(--primary);
+
+        .option-btn {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: var(--success) !important;
+            color: #166534 !important;
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            background: #fee2e2 !important;
+            border-color: var(--danger) !important;
+            color: #991b1b !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .navigation-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 0.6rem 1.2rem;
             border-radius: 6px;
-            font-size: 16px;
+            font-size: 0.9rem;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
+            font-weight: 600;
+            transition: background 0.2s;
         }
-        button#next-btn:hover {
-            background-color: #12284b;
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
         }
-        button#next-btn:disabled {
-            background-color: #9aa5b6;
+
+        .nav-btn:disabled {
+            background: var(--border);
+            color: var(--text-light);
             cursor: not-allowed;
         }
-        .results-container {
+
+        .results-screen {
             display: none;
             text-align: center;
+            padding: 2rem 1rem;
         }
-        .results-container h2 {
+
+        .results-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
             color: var(--primary);
-            font-size: 32px;
-            margin-bottom: 10px;
         }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: var(--bg);
-            border: 8px solid var(--secondary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 36px;
+
+        .score-display {
+            font-size: 3rem;
             font-weight: bold;
-            color: var(--primary);
-            margin: 30px auto;
+            margin: 1.5rem 0;
+            color: var(--text);
         }
-        .feedback {
-            margin-top: -15px;
-            margin-bottom: 20px;
+
+        .restart-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: bold;
-            min-height: 24px;
-            font-size: 16px;
+            cursor: pointer;
+            margin-top: 1rem;
         }
+
+        .restart-btn:hover {
+            background: #15803d;
+        }
+
         @media (max-width: 600px) {
-            .quiz-container { padding: 20px; }
-            .question-text { font-size: 16px; }
-            .option { padding: 12px 15px; font-size: 14px; }
+            body {
+                padding: 0.5rem;
+            }
+            header h1 {
+                font-size: 1.25rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz-ui">
-        <div class="header">
-            <h1>Primary Health Care & Maternal Care</h1>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
-        </div>
-        <div class="question-meta">
-            <span id="q-counter">Question 1 of 100</span>
+<div class="container">
+    <header>
+        <h1>Pediatric Nursing MCQ Quiz</h1>
+        <p>Second Class Nursing Department | Al-Diwaniyah Technical Institute</p>
+    </header>
+
+    <div class="quiz-body" id="quiz-container">
+        <div class="quiz-info">
+            <span id="question-counter">Question 1 of 100</span>
             <span id="score-counter">Score: 0</span>
         </div>
-        <div class="question-text" id="question">Loading question...</div>
-        <div class="options-grid" id="options"></div>
-        <div class="feedback" id="feedback"></div>
-        <div class="controls">
-            <button id="next-btn" disabled>Next Question</button>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div id="questions-wrapper">
+            <!-- Questions injected dynamically via JavaScript -->
+        </div>
+
+        <div class="navigation-footer">
+            <button class="nav-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
+            <button class="nav-btn" id="next-btn" onclick="nextQuestion()" disabled>Next</button>
         </div>
     </div>
 
-    <div class="quiz-container results-container" id="results-ui">
-        <h2>Quiz Complete!</h2>
-        <div class="score-circle" id="final-score">100%</div>
-        <p style="font-size: 18px; color: #555;">Review your lecture notes and try again to improve your recall.</p>
-        <button onclick="location.reload()" style="margin-top: 20px; background-color: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold;">Retake Quiz</button>
+    <div class="results-screen" id="results-screen">
+        <h2>Quiz Completed!</h2>
+        <p>You have successfully finished the 100-question pediatric nursing assessment.</p>
+        <div class="score-display" id="final-score">0 / 100</div>
+        <p id="result-message"></p>
+        <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
     </div>
+</div>
 
-    <script>
-        const quizData = [
-            { q: "How is health defined by the WHO in its 1948 constitution?", o: ["A state of complete physical, mental and social well-being", "Merely the absence of disease or infirmity", "A state of physical strength and endurance", "The ability to recover quickly from illness"], a: 0 },
-            { q: "What does the neutral point on the Illness-Wellness Continuum represent?", o: ["High-level wellness", "Severe symptoms", "No discernable illness or wellness", "Pre-mature death"], a: 2 },
-            { q: "Which of the following falls under the Wellness Paradium on the Illness-Wellness Continuum?", o: ["Disability", "Awareness, Education, Growth", "Symptoms and Signs", "Treatment"], a: 1 },
-            { q: "Public health is typically divided into epidemiology, biostatistics, and which of the following?", o: ["Occupational therapy", "Health services", "Clinical diagnostics", "Surgical care"], a: 1 },
-            { q: "What is the definition of public health nursing?", o: ["The practice of promoting and preventing the health of population", "The direct bedside care of infectious patients", "The financial management of community hospitals", "The surgical intervention of endemic diseases"], a: 0 },
-            { q: "How is a 'community' defined in the lecture?", o: ["People living in the same country", "Group of people who share common interests and interact", "Individuals working in the same hospital", "Patients suffering from the same disease"], a: 1 },
-            { q: "Which components make up the compose of community?", o: ["Only individuals and groups", "Individuals, groups, family and community", "Families and health workers", "Hospitals, clinics, and patients"], a: 1 },
-            { q: "Community health, as a field of practice, seeks to provide what?", o: ["Organizational structure and collaborative activities", "Strictly individual medical treatments", "Free surgical operations", "National health insurance policies"], a: 0 },
-            { q: "What is Community Health Nursing (CHN) concerned with?", o: ["Delivery of comprehensive nursing care to individual, family, group and population", "Only treating the elderly population", "Performing complex surgeries", "Providing care exclusively in private clinics"], a: 0 },
-            { q: "The philosophy of CHN emphasizes that its use is:", o: ["Strictly curative", "Only rehabilitative", "Preventive rather than curative and rehabilitative", "Focused purely on pharmacological treatment"], a: 2 },
-            { q: "What is rehabilitation?", o: ["A treatment designed to facilitate the process of recovery to as normal a condition as possible", "Able to cure illness immediately", "Presenting health education before illness occurs", "Isolating patients with infectious diseases"], a: 0 },
-            { q: "Which term means 'able to cure illness (diagnosis + treatment by use nursing care)'?", o: ["Rehabilitation", "Prevention", "Curative", "Promotion"], a: 2 },
-            { q: "Activities and practices aimed at anticipating, avoiding, and removing possible causes are called:", o: ["Curative", "Prevention", "Rehabilitation", "Tertiary care"], a: 1 },
-            { q: "What does primordial prevention involve?", o: ["Treatment after disease onset", "Present health education before illness occurs", "Isolation of contagious patients", "Physical therapy and recovery"], a: 1 },
-            { q: "What does primary prevention involve?", o: ["Present health education after illness occurs", "Diagnosis and medication", "Surgical intervention", "Complete isolation"], a: 0 },
-            { q: "Secondary prevention consists of which of the following?", o: ["Education only", "Isolation only", "Diagnosis + treatment + screen + control", "Physical rehabilitation only"], a: 2 },
-            { q: "Which level of prevention is associated with 'isolation'?", o: ["Primordial", "Primary", "Secondary", "Tertiary"], a: 3 },
-            { q: "Which of the following is one of the Aims/Philosophy of CHN?", o: ["To prevent and control diseases and disabilities", "To increase hospital admission rates", "To limit healthcare to the wealthy", "To focus solely on experimental treatments"], a: 0 },
-            { q: "According to the Aims of CHN, it seeks to promote:", o: ["Illness and dependency", "Health and efficiency", "Hospital stays", "Isolation procedures"], a: 1 },
-            { q: "How does CHN aim to prolong life?", o: ["By providing need based, well balanced comprehensive health care services", "By eliminating all physical labor", "By prescribing antibiotics to everyone", "By keeping everyone in isolation"], a: 0 },
-            { q: "Which of the following involves the health of the 'whole nation'?", o: ["Community health", "Public health", "Family health", "Individual health"], a: 1 },
-            { q: "Which of the following involves the health of a 'specific community'?", o: ["Public health", "Community health", "Global health", "National health"], a: 1 },
-            { q: "Public health protects the health of:", o: ["Everyone", "Only those in a particular community", "Only those who pay for it", "Only children"], a: 0 },
-            { q: "Community health protects the health of:", o: ["Everyone in the world", "All of those in a particular community", "Only hospitalized patients", "Only elderly citizens"], a: 1 },
-            { q: "Which branch gives free health care to individuals?", o: ["Private health", "Community health", "Public health", "Corporate health"], a: 2 },
-            { q: "Which branch keeps the food, water supply and general environment healthy for the community?", o: ["Public health", "Community health", "Individual medicine", "Clinical diagnostics"], a: 1 },
-            { q: "What is defined as the first level of contact with the health system to promote health and prevent illness?", o: ["Tertiary Health Care", "Secondary Health Care", "Primary Health Care", "Specialized Care"], a: 2 },
-            { q: "In the essential elements of PHC (ELEMENTS), what does the first 'E' stand for?", o: ["Emergency services", "Education concerning prevailing health problems", "Epidemiological studies", "Environmental sanitation"], a: 1 },
-            { q: "What does the 'L' in the essential elements of PHC stand for?", o: ["Local hospital construction", "Locally endemic disease prevention and control", "Laboratory testing", "Life support systems"], a: 1 },
-            { q: "What does the second 'E' in the essential elements of PHC stand for?", o: ["Expanded program of immunization", "Emergency room operations", "Economic support", "Elderly care"], a: 0 },
-            { q: "What does the 'M' in the essential elements of PHC stand for?", o: ["Medical equipment", "Maternal and child health care including family planning", "Mental health asylums", "Mortality tracking"], a: 1 },
-            { q: "What does the third 'E' in the essential elements of PHC stand for?", o: ["Endemic control", "Expanded training", "Essential drugs arrangement", "Emergency transportation"], a: 2 },
-            { q: "What does the 'N' in the essential elements of PHC stand for?", o: ["National health policies", "Nutritional food supplement", "Nursing education", "Neonatal intensive care"], a: 1 },
-            { q: "What does the 'T' in the essential elements of PHC stand for?", o: ["Treatment of communicable and non-communicable disease", "Transportation of patients", "Testing of water supplies", "Training of doctors"], a: 0 },
-            { q: "What does the 'S' in the essential elements of PHC stand for?", o: ["Surgical operations", "Safe water and sanitation", "Specialized medicine", "School health programs"], a: 1 },
-            { q: "How is a 'family' defined in the lecture?", o: ["People living in the same city", "A group of two or more persons related by birth, marriage, or adoption", "Co-workers sharing an office", "A group of friends"], a: 1 },
-            { q: "What does 'Family health' include?", o: ["Only the physical health of parents", "Promotion and maintenance of physical, mental, spiritual and social health for the family unit", "Only the financial stability of the household", "Only the medical records of the children"], a: 1 },
-            { q: "Which nursing discipline is concerned with family structure, development, functions and health services?", o: ["Public Health Nursing", "Family Health Care Nursing", "Surgical Nursing", "Occupational Nursing"], a: 1 },
-            { q: "A family consisting of a two-generation relationship of parents and children living together is a:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 1 },
-            { q: "A family formed when parents bring unrelated children from a prior marriage into a new family is a:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 0 },
-            { q: "A nuclear family and their close relatives (grandparents, aunts, uncles) living together is an:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 2 },
-            { q: "A lone parent and offspring living together as a family unit is a:", o: ["Blended family", "Nuclear family", "Extended family", "Single-parent family"], a: 3 },
-            { q: "Which of the following is a way Community Health Nurses help families?", o: ["Providing direct care", "Prescribing heavy narcotics", "Performing complex surgeries", "Revoking health insurance"], a: 0 },
-            { q: "Another way Community Health Nurses help families is by:", o: ["Creating barriers to services", "Removing barriers to needed services", "Isolating them from the community", "Refusing to provide health education"], a: 1 },
-            { q: "Community Health Nurses aim to improve the capacity of the family to:", o: ["Act on its own behalf and assume responsibility", "Rely entirely on hospital staff", "Ignore health warnings", "Avoid medical facilities"], a: 0 },
-            { q: "Family members' age and maturational level fall under which family assessment consideration?", o: ["Biophysical considerations", "Psychological considerations", "Sociocultural considerations", "Behavioral considerations"], a: 0 },
-            { q: "Communication patterns and coping abilities fall under which family assessment consideration?", o: ["Biophysical", "Psychological", "Physical environmental", "Health system"], a: 1 },
-            { q: "Home environment and safety hazards fall under which family assessment consideration?", o: ["Sociocultural", "Psychological", "Physical environmental", "Behavioral"], a: 2 },
-            { q: "Roles, culture, and religion fall under which family assessment consideration?", o: ["Biophysical", "Sociocultural", "Physical environmental", "Health system"], a: 1 },
-            { q: "Consumption patterns, rest, and sleep fall under which family assessment consideration?", o: ["Behavioral", "Sociocultural", "Psychological", "Health system"], a: 0 },
-            { q: "Family response to illness and use of health care services fall under which consideration?", o: ["Biophysical", "Behavioral", "Health system", "Physical environmental"], a: 2 },
-            { q: "What is Community Assessment?", o: ["A process to compile data regarding a community's health status and resources", "A test given to nursing students", "A financial audit of a local hospital", "A survey of doctor's salaries"], a: 0 },
-            { q: "Which community assessment approach focuses specifically on community health problems?", o: ["Population assessment approach", "Need assessment approach", "Windshield survey", "Subsystem assessment"], a: 1 },
-            { q: "Which community assessment approach provides an overall picture of community health status?", o: ["Need assessment approach", "Problem-Oriented Assessment", "Population assessment approach", "Epidemiologic study"], a: 2 },
-            { q: "Which survey involves studying data already available on a community?", o: ["Comprehensive Assessment", "Familiarization or Windshield Survey", "Focus Group", "Problem-Oriented Assessment"], a: 1 },
-            { q: "Which assessment begins with a single issue and assesses the community in terms of that issue?", o: ["Problem-Oriented Assessment", "Comprehensive Assessment", "Windshield Survey", "Population Assessment"], a: 0 },
-            { q: "Which assessment focuses on a single dimension of community life, like surveying religious organizations?", o: ["Community Subsystem Assessment", "Comprehensive Assessment", "Need Assessment", "Epidemiologic Study"], a: 0 },
-            { q: "Which assessment seeks to discover ALL relevant community health information by reviewing all existing data?", o: ["Windshield Survey", "Problem-Oriented Assessment", "Community Subsystem Assessment", "Comprehensive Assessment"], a: 3 },
-            { q: "An assessment method in which a series of questions is used to collect data for a specific group is a:", o: ["Survey", "Focus group", "Descriptive study", "Town hall meeting"], a: 0 },
-            { q: "Which method examines the amount and distribution of a disease in a population?", o: ["Community Forums", "Descriptive Epidemiologic Studies", "Windshield Survey", "Focus Group"], a: 1 },
-            { q: "Which qualitative assessment method is designed to obtain community opinions in a large setting?", o: ["Epidemiologic Studies", "Surveys", "Community Forums or Town Hall Meetings", "Windshield Survey"], a: 2 },
-            { q: "Which method is designed to obtain grassroots opinion in a smaller, targeted setting?", o: ["Descriptive Studies", "Focus Group", "Comprehensive Assessment", "Vital Statistics"], a: 1 },
-            { q: "Community members, formal leaders, and informal leaders are examples of which data source?", o: ["Secondary", "Primary", "International", "Tertiary"], a: 1 },
-            { q: "Health team members, client records, and vital statistics are examples of which data source?", o: ["Primary", "Secondary", "International", "National"], a: 1 },
-            { q: "The World Health Organization (WHO) and its six regional offices are examples of which data source?", o: ["Primary", "Secondary", "International", "Local"], a: 2 },
-            { q: "What is the FIRST stage of community assessment?", o: ["Analyze information", "Data collection", "Implementation", "Evaluation"], a: 1 },
-            { q: "What is the SECOND stage of community assessment?", o: ["Data collection", "Establish a work plan", "Analyze information", "Implementation"], a: 2 },
-            { q: "What is the THIRD stage of community assessment?", o: ["Evaluation", "Analyze information", "Establish a work plan and schedule", "Data collection"], a: 2 },
-            { q: "What is the FOURTH stage of community assessment?", o: ["Implementation", "Evaluation", "Data collection", "Analyze information"], a: 0 },
-            { q: "What is the FIFTH and final stage of community assessment?", o: ["Implementation", "Establish a work plan", "Data collection", "Evaluation"], a: 3 },
-            { q: "Health education is the process by which individuals learn to Promote, Maintain, and:", o: ["Ignore health", "Restore health", "Diagnose illnesses", "Perform surgery"], a: 1 },
-            { q: "Health Education is considered the primary and dominant measure in:", o: ["Surgical operations", "Health Promotion", "Pharmacology", "Tertiary care"], a: 1 },
-            { q: "One objective of health education is to help people achieve health by:", o: ["Relying entirely on doctors", "Their own sources, activities", "Buying expensive equipment", "Moving to a different country"], a: 1 },
-            { q: "Health education aims to develop the sense of responsibilities for improvement of health of:", o: ["Hospitals and clinics", "Individuals & families", "The government only", "Insurance companies"], a: 1 },
-            { q: "Health education aims to develop scientific knowledge, attitude, and skill to develop:", o: ["Correct habits", "Medical degrees", "Surgical precision", "Hospital policies"], a: 0 },
-            { q: "Health education aims to alter behavior because:", o: ["It is fun", "It may lead them to cause disease", "It reduces hospital profits", "It forces them to buy medication"], a: 1 },
-            { q: "What is the FIRST step in the process of Health Education?", o: ["Establish Educational Goals", "Select Appropriate Methods", "Identify Educational Needs", "Developing Effective Programs"], a: 2 },
-            { q: "What is the SECOND step in the process of Health Education?", o: ["Identify Educational Needs", "Establish Educational Goals and Objectives", "Skills of the Effective Educator", "Select Appropriate Methods"], a: 1 },
-            { q: "What is the THIRD step in the process of Health Education?", o: ["Select Appropriate Educational Methods", "Identify Needs", "Establish Goals", "Developing Programs"], a: 0 },
-            { q: "Difficulty in hearing and expression is an example of which barrier to health education?", o: ["Physiological barriers", "Psychological barriers", "Environmental barriers", "Cultural barriers"], a: 0 },
-            { q: "Emotional disturbance, neurosis, and depressive states are examples of which barrier?", o: ["Physiological", "Psychological", "Environmental", "Cultural"], a: 1 },
-            { q: "Noise and congestion are examples of which barrier to health education?", o: ["Physiological", "Psychological", "Environmental", "Cultural"], a: 2 },
-            { q: "Level of knowledge, religion, and belief are examples of which barrier?", o: ["Physiological", "Psychological", "Environmental", "Cultural"], a: 3 },
-            { q: "Which of the following is a setting for health education listed in the lecture?", o: ["Space stations", "School", "Underwater labs", "Deserted islands"], a: 1 },
-            { q: "Providing education at health fairs about diet, exercise, or environmental hazards is an example of:", o: ["Primary Prevention", "Secondary Prevention", "Tertiary Prevention", "Quaternary Prevention"], a: 0 },
-            { q: "Providing education and health screenings for early diagnosis (like diabetes) is an example of:", o: ["Primary Prevention", "Secondary Prevention", "Tertiary Prevention", "Primordial Prevention"], a: 1 },
-            { q: "Providing education in rehabilitation centers to teach amputees ways to increase functioning is an example of:", o: ["Primary Prevention", "Secondary Prevention", "Tertiary Prevention", "Primordial Prevention"], a: 2 },
-            { q: "The three main levels of Teaching Methods for Health Education are Individual Approach, Group Approach, and:", o: ["Surgical Approach", "General Approach / Mass Approach", "Clinical Approach", "Laboratory Approach"], a: 1 },
-            { q: "In the Individual Approach, the topic selected should be:", o: ["The same for everyone", "Relevant to the situation", "Highly advanced medical science", "Unrelated to the patient's condition"], a: 1 },
-            { q: "Personal contact, home visits, and personal letters are methods used in:", o: ["Mass Media", "Group Teaching", "Tertiary Prevention", "Environmental modification"], a: 1 },
-            { q: "In Group Health Education, the choice of subject must relate directly to:", o: ["The interest of the group", "The national news", "The hospital's financial needs", "The nurse's personal hobbies"], a: 0 },
-            { q: "Which of the following is a 'One-way or didactic method' of group teaching?", o: ["Group discussion", "Role playing", "Lecture", "Workshop"], a: 2 },
-            { q: "Which of the following is a 'Two-way or Socratic Method' of group teaching?", o: ["Films", "Charts", "Flashcards", "Group discussion"], a: 3 },
-            { q: "Posters, health magazines, television, and radio are employed for which approach?", o: ["Individual Approach", "Mass Approach", "Didactic Approach", "Socratic Approach"], a: 1 },
-            { q: "Compared to individual or group methods, mass media are generally:", o: ["More effective in changing human behaviors", "Less effective in changing human behaviors", "Exactly the same in effectiveness", "Only effective for surgical patients"], a: 1 },
-            { q: "Maternal Care encompasses the health of women during pregnancy, childbirth, and the:", o: ["Pre-adolescent period", "Postpartum period", "Menopausal period", "Childhood period"], a: 1 },
-            { q: "Maternal and Child health refers to promotive, preventive, curative, and rehabilitative care and includes:", o: ["Geriatric care", "Handicapped children and adolescence", "Occupational hazards for men", "Sports medicine"], a: 1 },
-            { q: "Pregnancy is divided into three trimesters, each lasting for approximately:", o: ["1 month", "2 months", "3 months", "4 months"], a: 2 },
-            { q: "During the first two trimesters (from 1st to 28th week), how often should antenatal visits occur?", o: ["Weekly", "Fortnightly", "Monthly", "Daily"], a: 2 },
-            { q: "From the 28th week to the 36th week of pregnancy, how often should visits occur?", o: ["Weekly", "Fortnightly (every two weeks)", "Monthly", "Once a trimester"], a: 1 },
-            { q: "From the 36th week to delivery, how often should antenatal visits occur?", o: ["Weekly", "Fortnightly", "Monthly", "Never"], a: 0 },
-            { q: "Which age group is considered a maternal risk factor?", o: ["Mothers aged 20 to 30 years", "Mothers aged less than 17 years and over 35 years", "Mothers aged 25 to 34 years", "Mothers aged exactly 30 years"], a: 1 },
-            { q: "Which of the following is considered a maternal risk factor?", o: ["Drinking enough water", "Multipartum mothers (having multiple previous births)", "Exercising lightly", "Taking prenatal vitamins"], a: 1 },
-            { q: "Care provided to pregnant women from conception and through the three trimesters is called:", o: ["Intranatal care", "Antenatal care", "Postnatal care", "Neonatal care"], a: 1 },
-            { q: "During antenatal care, the first dose of the tetanus toxoid vaccine should be given at:", o: ["4-8 weeks", "16-20 weeks", "28-32 weeks", "36-40 weeks"], a: 1 }
-        ];
+<script>
+    const quizData = [
+        // Lecture 1 & Newborn Stage (Q1 - Q25)
+        {
+            question: "What is defined as the first 4 weeks or first month of life and is a transitional period from intrauterine to extrauterine environment?",
+            options: ["Infant stage", "Newborn stage", "Toddler stage", "Preschool stage"],
+            answer: 1
+        },
+        {
+            question: "What is the normal birth weight range for a newborn infant?",
+            options: ["2.0 - 3.5 kg", "2.5 - 4.5 kg", "3.0 - 5.0 kg", "1.5 - 3.0 kg"],
+            answer: 1
+        },
+        {
+            question: "By how many days after birth do newborns typically lose 5% to 10% of their body weight?",
+            options: ["1-2 days", "3-4 days", "5-7 days", "10 days"],
+            answer: 1
+        },
+        {
+            question: "At what day of life does weight gain typically resume/occur?",
+            options: ["5th day", "7th day", "10th day", "14th day"],
+            answer: 2
+        },
+        {
+            question: "Which of the following is NOT a reason for the initial 5% to 10% weight loss in newborns?",
+            options: ["Withdrawal of hormones from mother", "Loss of excessive extracellular fluid", "Passage of meconium and urine", "Increased subcutaneous fat accumulation"],
+            answer: 3
+        },
+        {
+            question: "What is the average height (length) for newborn baby boys?",
+            options: ["47.5 cm", "49 cm", "50 cm", "53.75 cm"],
+            answer: 2
+        },
+        {
+            question: "What is the average height (length) for newborn baby girls?",
+            options: ["47.5 cm", "49 cm", "50 cm", "53.75 cm"],
+            answer: 1
+        },
+        {
+            question: "What is the normal height range for both newborn boys and girls?",
+            options: ["45.0 - 50.0 cm", "47.5 - 53.75 cm", "50.0 - 55.0 cm", "46.0 - 52.0 cm"],
+            answer: 1
+        },
+        {
+            question: "What is the normal head circumference range for a newborn?",
+            options: ["30.5 - 33 cm", "33 - 35 cm", "35 - 37 cm", "28 - 30 cm"],
+            answer: 1
+        },
+        {
+            question: "How does the head size compare to total body length in a newborn?",
+            options: ["1/2 total body length", "1/3 total body length", "1/4 total body length", "1/5 total body length"],
+            answer: 2
+        },
+        {
+            question: "How many fontanels does the newborn skull possess?",
+            options: ["1", "2", "3", "4"],
+            answer: 1
+        },
+        {
+            question: "What is the shape of the anterior fontanel?",
+            options: ["Triangular", "Diamond in shape", "Round", "Oval"],
+            answer: 1
+        },
+        {
+            question: "The anterior fontanel is formed by the junction of which sutures?",
+            options: ["Sagittal, coronal, and frontal sutures", "Lambdoid and sagittal sutures", "Metopic and lambdoid sutures", "Coronal and occipital sutures"],
+            answer: 0
+        },
+        {
+            question: "Between which bones is the anterior fontanel located?",
+            options: ["Occipital and parietal bones", "2 frontal and 2 parietal bones", "Temporal and frontal bones", "Maxilla and mandible"],
+            answer: 1
+        },
+        {
+            question: "What are the typical dimensions (length and width) of the anterior fontanel?",
+            options: ["1-2 cm length and 1 cm width", "3-4 cm in length and 2-3 cm width", "5-6 cm in length and 4 cm width", "2-3 cm in length and 1 cm width"],
+            answer: 1
+        },
+        {
+            question: "At what age does the anterior fontanel typically close?",
+            options: ["2-4 months", "6-9 months", "12-18 months", "24-36 months"],
+            answer: 2
+        },
+        {
+            question: "What is the shape of the posterior fontanel?",
+            options: ["Triangular", "Diamond in shape", "Square", "Circular"],
+            answer: 0
+        },
+        {
+            question: "Between which bones is the posterior fontanel located?",
+            options: ["2 frontal and 2 parietal bones", "Occipital and 2 parietal bones", "Temporal and occipital bones", "Frontal and nasal bones"],
+            answer: 1
+        },
+        {
+            question: "At what age does the posterior fontanel close?",
+            options: ["Between 2-4 months of age", "Between 6-8 months of age", "Between 12-18 months of age", "Between 18-24 months of age"],
+            answer: 0
+        },
+        {
+            question: "What is the normal chest circumference of a newborn?",
+            options: ["33 to 35 cm", "30.5 to 33 cm", "36 to 40 cm", "28 to 30 cm"],
+            answer: 1
+        },
+        {
+            question: "How does the newborn chest circumference usually compare to the head circumference?",
+            options: ["2-3 cm greater than head circumference", "Equal to head circumference", "2-3 cm less than head circumference", "5 cm less than head circumference"],
+            answer: 2
+        },
+        {
+            question: "What is the normal temperature range (in Celsius) for a newborn's vital signs?",
+            options: ["35.0 to 36.0 C", "36.3 to 37.2 C", "37.5 to 38.0 C", "34.5 to 35.5 C"],
+            answer: 1
+        },
+        {
+            question: "What is the normal pulse rate range for a newborn?",
+            options: ["80 to 120 beats/min", "100 to 140 beats/min", "120 to 160 beats/min", "140 to 180 beats/min"],
+            answer: 2
+        },
+        {
+            question: "What is the normal respiration rate range for a newborn according to physiological growth vital signs?",
+            options: ["20 to 30 breaths/min", "35 to 50 breaths/min", "60 to 80 breaths/min", "15 to 25 breaths/min"],
+            answer: 1
+        },
+        {
+            question: "What is the average blood pressure at birth (Systolic/Diastolic)?",
+            options: ["120/80", "90/60", "75/42", "100/70"],
+            answer: 2
+        },
 
-        let currentQuestion = 0;
-        let score = 0;
-        let selectedOption = null;
+        // Apgar Score & Senses & Motor Development (Q26 - Q50)
+        {
+            question: "In the APGAR score, what score is given for a pulse rate greater than 100 beats per minute?",
+            options: ["0 points", "1 point", "2 points", "3 points"],
+            answer: 2
+        },
+        {
+            question: "In the APGAR score, what score is given for blue or pale appearance (skin color)?",
+            options: ["0 points", "1 point", "2 points", "3 points"],
+            answer: 0
+        },
+        {
+            question: "In the APGAR score, what score corresponds to a 'strong crying' respiration response?",
+            options: ["0 points", "1 point", "2 points", "3 points"],
+            answer: 2
+        },
+        {
+            question: "In the APGAR score, what score is given for 'some flexion of arms and legs' under activity/muscle tone?",
+            options: ["0 points", "1 point", "2 points", "3 points"],
+            answer: 1
+        },
+        {
+            question: "In the APGAR score, what does grimace score 1 point represent?",
+            options: ["No response to stimulation, floppy", "Grimace on suction or aggressive stimulation", "Cry on stimulation", "Active flexion against resistance"],
+            answer: 1
+        },
+        {
+            question: "Which of the following is NOT one of the 5 parameters rated by the Apgar score?",
+            options: ["Heart rate / Pulse", "Blood glucose level", "Muscle tone / Activity", "Respiration / Crying"],
+            answer: 1
+        },
+        {
+            question: "Which of the following senses are listed for a newborn?",
+            options: ["Touch, vision, hearing, taste, smell", "Touch and vision only", "Hearing and taste only", "Smell and touch only"],
+            answer: 0
+        },
+        {
+            question: "How are a newborn's movements described under gross motor development?",
+            options: ["Coordinated, deliberate, and precise", "Random, diffuse, and uncoordinated", "Slow, rigid, and restricted", "Symmetric and highly controlled"],
+            answer: 1
+        },
+        {
+            question: "What is a characteristic fine motor development trait of a newborn regarding their hands?",
+            options: ["Keeps hands wide open with fingers extended", "Holds hand in fist", "Points with index finger", "Picks up small objects"],
+            answer: 1
+        },
+        {
+            question: "What does the newborn do with arms and legs when crying?",
+            options: ["Extends them straight out", "Draws arms and legs to body", "Relaxes them completely", "Waves them rapidly"],
+            answer: 1
+        },
+        {
+            question: "What are primitive reflexes (infantile or newborn reflexes) defined as?",
+            options: ["Voluntary conscious actions", "Involuntary or automatic actions in response to something without thinking", "Learned motor skills", "Pathological neurologic signs"],
+            answer: 1
+        },
+        {
+            question: "Into how many main groups are general reflexes divided?",
+            options: ["2", "3", "4", "5"],
+            answer: 1
+        },
+        {
+            question: "Which of the following belongs to the feeding reflexes group?",
+            options: ["Moro, Startle, Grasping", "Cough, Sneezing, Yawing", "Rooting, Gag and Swallowing, Sucking", "Stepping, Babinski, Tonic-Neck"],
+            answer: 2
+        },
+        {
+            question: "Which of the following belongs to the protective reflexes group?",
+            options: ["Rooting and Sucking", "Cough, Sneezing, Yawning, Blinking", "Moro and Grasping", "Stepping and Babinski"],
+            answer: 1
+        },
+        {
+            question: "Which of the following belongs to the motor movement reflexes group?",
+            options: ["Cough and Sneeze", "Rooting and Swallowing", "Moro, Startle, Grasping, Tonic-Neck, Stepping, Babinski", "Blinking and Yawning"],
+            answer: 2
+        },
+        {
+            question: "Which protective reflex involves blinking your eyes when touched or when a sudden bright light appears?",
+            options: ["Cough reflex", "Blinking reflex", "Gag reflex", "Sneeze reflex"],
+            answer: 1
+        },
+        {
+            question: "Which protective reflex occurs when the body needs additional oxygen?",
+            options: ["Yawn reflex", "Sneeze reflex", "Cough reflex", "Gag reflex"],
+            answer: 0
+        },
+        {
+            question: "In the Sucking reflex, what happens when a finger or nipple is placed in the infant's mouth?",
+            options: ["The infant turns away", "The infant will suck", "The infant gags", "The infant cries"],
+            answer: 1
+        },
+        {
+            question: "In the Rooting reflex, what happens if the infant's cheek is stroked?",
+            options: ["The infant turns towards the side stroked and makes sucking motions", "The infant extends its toes", "The infant throws out its arms", "The infant grasps the finger"],
+            answer: 0
+        },
+        {
+            question: "In the Swallowing reflex, when liquid moves into the mouth, what does the tongue do?",
+            options: ["Pushes it out of the mouth", "Moves it to the back of the mouth for swallowing", "Stays completely flat", "Bites down on the liquid"],
+            answer: 1
+        },
+        {
+            question: "What happens during the Grasping (Palmar) reflex?",
+            options: ["Babies extend their toes", "When the inside of the palm is touched, babies grasp a finger tightly", "Babies throw out their arms", "Babies make crawling movements"],
+            answer: 1
+        },
+        {
+            question: "At what gestational age does the palmar/grasp reflex begin?",
+            options: ["28 weeks of gestation", "32 weeks of gestation", "36 weeks of gestation", "39 weeks of gestation"],
+            answer: 1
+        },
+        {
+            question: "At what age does the palmar grasp reflex disappear and get replaced by voluntary grasp?",
+            options: ["Disappears at 3-4 months, replaced at 4-5 months", "Disappears at 1 month, replaced at 2 months", "Disappears at 6 months, replaced at 9 months", "Disappears at 12 months, replaced at 15 months"],
+            answer: 0
+        },
+        {
+            question: "What is another name for the Tonic neck reflex?",
+            options: ["Fencing posture / asymmetric tonic neck reflex", "Stepping posture", "Moro posture", "Startle posture"],
+            answer: 0
+        },
+        {
+            question: "When does the tonic neck reflex appear and when does it disappear?",
+            options: ["Present at birth, disappears at 2 months", "Present at 1 month of age, disappears at around 4 months", "Present at 3 months, disappears at 6 months", "Present at 6 months, disappears at 1 year"],
+            answer: 1
+        },
 
-        const uiElements = {
-            quiz: document.getElementById('quiz-ui'),
-            results: document.getElementById('results-ui'),
-            question: document.getElementById('question'),
-            options: document.getElementById('options'),
-            nextBtn: document.getElementById('next-btn'),
-            progress: document.getElementById('progress'),
-            qCounter: document.getElementById('q-counter'),
-            scoreCounter: document.getElementById('score-counter'),
-            feedback: document.getElementById('feedback'),
-            finalScore: document.getElementById('final-score')
-        };
+        // Lecture 2 & Prematurity & Complications (Q51 - Q75)
+        {
+            question: "What is a baby born before how many weeks of pregnancy considered premature (preterm)?",
+            options: ["35 weeks", "37 weeks", "38 weeks", "40 weeks"],
+            answer: 1
+        },
+        {
+            question: "What weight threshold defines Low Birth Weight (LBW) for many premature babies?",
+            options: ["Less than 3,000 grams", "Less than 2,500 grams", "Less than 2,000 grams", "Less than 1,500 grams"],
+            answer: 1
+        },
+        {
+            question: "Which of the following body areas of a premature newborn still need to mature and fully develop?",
+            options: ["Lungs, digestive system, immune system, and skin", "Hair, nails, and teeth only", "Heart and bones only", "Kidneys and liver only"],
+            answer: 0
+        },
+        {
+            question: "Which of the following is classified as a maternal factor/cause of prematurity?",
+            options: ["Placenta Previa", "Multiple pregnancy (twins/triplets)", "Preeclampsia (high blood pressure of pregnancy)", "Intrauterine growth retardation (IUGR)"],
+            answer: 2
+        },
+        {
+            question: "Which of the following is classified as a factor involving the pregnancy causing prematurity?",
+            options: ["Chronic medical illness (heart/kidney disease)", "Placenta Previa (low lying position of the placenta)", "Urinary tract infections", "Drug use (such as cocaine)"],
+            answer: 1
+        },
+        {
+            question: "Which of the following is a factor involving the fetus causing prematurity?",
+            options: ["Abnormal structure of the uterus", "Premature rupture of membranes", "Multiple pregnancy (twins, triplets or more)", "Previous preterm birth"],
+            answer: 2
+        },
+        {
+            question: "What is a characteristic feature of breast tissue in an infant of less than 36 weeks' gestation?",
+            options: ["Has 5 to 6 mm of breast tissue", "Has no breast tissue", "Has raised areola with 3 mm tissue", "Has well-developed milk ducts"],
+            answer: 1
+        },
+        {
+            question: "At what gestational age do infants typically have 5 to 6 mm of breast tissue?",
+            options: ["32 to 33 weeks", "34 weeks", "36 weeks", "39 to 40 weeks"],
+            answer: 3
+        },
+        {
+            question: "What is Kangaroo Mother Care?",
+            options: ["A method of feeding premature babies via gavage tube", "A method of caring for premature babies using skin-to-skin contact with the parent", "A mechanical ventilation technique", "An incubator temperature regulation system"],
+            answer: 1
+        },
+        {
+            question: "When suctioning an infant in the delivery room before birth, what is suctioned first?",
+            options: ["The infant's nose is suctioned first, then the mouth", "The infant's mouth is suctioned first, then his nose", "Both nose and mouth simultaneously", "The throat via endotracheal tube"],
+            answer: 1
+        },
+        {
+            question: "What should be placed on an infant's head immediately after delivery to prevent heat loss?",
+            options: ["A sterile bandage", "A cap", "An oxygen mask", "A cooling band"],
+            answer: 1
+        },
+        {
+            question: "Where is the identification (ID) band placed on the infant after delivery?",
+            options: ["On the infant's neck and ankle", "On the infant's wrist and leg", "On the infant's chest and arm", "On the infant's forehead"],
+            answer: 1
+        },
+        {
+            question: "What is defined as the initial step in the process of attraction and response between the newborn and the parents?",
+            options: ["Parent-infant bonding", "Neonatal resuscitation", "Kangaroo care initiation", "Apgar scoring"],
+            answer: 0
+        },
+        {
+            question: "Which of the following is listed as a complication of prematurity involving the brain?",
+            options: ["Retinopathy of Prematurity (ROP)", "Interventricular Hemorrhage (IVH)", "Respiratory Distress Syndrome (RDS)", "Hypocalcemia"],
+            answer: 1
+        },
+        {
+            question: "Which endocrine complication is listed under complications of prematurity?",
+            options: ["Hypocalcemia", "Hyperglycemia", "Hypothyroidism", "Hyperparathyroidism"],
+            answer: 0
+        },
+        {
+            question: "What eye complication is listed under complications of prematurity?",
+            options: ["Cataracts", "Retinopathy of Prematurity (ROP)", "Glaucoma", "Strabismus"],
+            answer: 1
+        },
 
-        function loadQuestion() {
-            const q = quizData[currentQuestion];
-            uiElements.question.textContent = `${currentQuestion + 1}. ${q.q}`;
-            uiElements.qCounter.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
-            uiElements.progress.style.width = `${((currentQuestion) / quizData.length) * 100}%`;
-            uiElements.feedback.textContent = "";
-            uiElements.nextBtn.disabled = true;
-            selectedOption = null;
+        // Lecture 3 & Care at Birth & Nursery (Q76 - Q85)
+        {
+            question: "How many basic needs of a baby are identified at birth?",
+            options: ["Two basic needs", "Three basic needs", "Four basic needs", "Five basic needs"],
+            answer: 2
+        },
+        {
+            question: "Which of the following are the FOUR basic needs at birth?",
+            options: ["Thermal protection, Normal breathing, Mother's milk, Protection from infection", "Oxygen therapy, IV fluids, Antibiotics, Incubator", "Weaning, Immunization, Bathing, Diapering", "Vitamin D, Iron drops, Massage, Swaddling"],
+            answer: 0
+        },
+        {
+            question: "What is the recommended delivery room temperature for the 'Warm chain' at delivery?",
+            options: ["20 C", "22 C", "25 C", "30 C"],
+            answer: 2
+        },
+        {
+            question: "What does WHO 'Five cleans' to prevent infection at delivery include?",
+            options: ["Hands of attendants washed with soap, Surface for delivery, Cutting instrument for cord, String to tie cord, Cloth to wrap baby and mother", "Sterile gloves, Antiseptic wash, Gauze pads, Antibiotic eye drops, Alcohol swabs", "Mask, Gown, Cap, Sterile drape, Scalpel", "Soap, Water, Towel, Blanket, Basin"],
+            answer: 0
+        },
+        {
+            question: "What should be done regarding the umbilical cord care after delivery according to 'Clean chain'?",
+            options: ["Apply antibiotic powder daily", "Keep the cord clean and dry; do not apply anything", "Apply traditional oil or herbal pastes", "Wash with antiseptic soap twice a day"],
+            answer: 1
+        },
+        {
+            question: "What is the temperature maintenance range for a premature baby in the nursery?",
+            options: ["34.0 - 35.0 C", "35.5 - 36.5 C", "36.5 - 37.5 C", "37.0 - 38.0 C"],
+            answer: 1
+        },
+        {
+            question: "What is the initial feeding amount and solution often given to a premature baby in the nursery?",
+            options: ["10-20 cc of full formula", "2-4 cc and 5 percent sugar solution, increased slowly", "30 cc of cow milk", "50 cc of glucose water"],
+            answer: 1
+        },
+        {
+            question: "What medications are specified under nursery care for premature babies?",
+            options: ["Vitamin, Iron", "Morphine, Codeine", "Insulin, Thyroxine", "Antihistamines, Steroids"],
+            answer: 0
+        },
 
-            uiElements.options.innerHTML = '';
-            q.o.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'option';
-                btn.textContent = opt;
-                btn.onclick = () => selectOption(index, btn);
-                uiElements.options.appendChild(btn);
+        // Lecture 4, 5, 6 & Growth, Development, Dentition, Feeding (Q86 - Q100)
+        {
+            question: "How is growth defined?",
+            options: ["Progressive increase in skill and capacity of function", "Increase in physical size of the whole or any of its part (measured in inches, cm, kg, pound)", "Emotional maturity development", "Acquisition of language and speech"],
+            answer: 1
+        },
+        {
+            question: "How is development defined?",
+            options: ["Increase in physical height and weight", "Progressive increase in skill and capacity of function", "Doubling of birth weight", "Eruption of deciduous teeth"],
+            answer: 1
+        },
+        {
+            question: "At what age does the infant's birth weight typically double?",
+            options: ["3 months", "6 months", "1 year", "2 years"],
+            answer: 1
+        },
+        {
+            question: "At what age does the infant's birth weight typically treble (triple)?",
+            options: ["6 months", "1 year", "2 years", "4 years"],
+            answer: 1
+        },
+        {
+            question: "At what age is weight 4 times (4X) the birth weight?",
+            options: ["1 year", "2 years", "3 years", "4 years"],
+            answer: 1
+        },
+        {
+            question: "What is the normal Intelligence Quotient (I.Q.) range?",
+            options: ["70 - 89", "90 - 109", "110 - 139", "140 and over"],
+            answer: 1
+        },
+        {
+            question: "What I.Q. score classifies an individual as gifted?",
+            options: ["90 - 109", "110 - 129", "130 - 139", "140 or over"],
+            answer: 3
+        },
+        {
+            question: "According to emotional development stages (Erikson stages in text), what sense is associated with Infancy (0-1 year)?",
+            options: ["Sense of autonomy", "Sense of initiative", "Sense of trust", "Industry"],
+            answer: 2
+        },
+        {
+            question: "According to emotional development, what sense is associated with Toddler stage (1-3 years)?",
+            options: ["Sense of trust", "Sense of autonomy", "Sense of initiative", "Identity"],
+            answer: 1
+        },
+        {
+            question: "At what age do deciduous (temporary) teeth typically begin to erupt in a child?",
+            options: ["3 months", "6 months", "9 months", "12 months"],
+            answer: 1
+        },
+        {
+            question: "At what age do permanent teeth begin to appear?",
+            options: ["4 years", "6 years", "8 years", "10 years"],
+            answer: 1
+        },
+        {
+            question: "Which of the following is listed as a cause of delayed eruption of teeth in a child?",
+            options: ["Excessive calcium intake", "Disease of child during dentition / Decrease Ca in food", "Mouth breathing", "Thumb sucking"],
+            answer: 1
+        },
+        {
+            question: "Which of the following is listed as a cause of deformity of teeth?",
+            options: ["Mouth breathing, Thumb sucking, Tongue sucking, Accident", "Breastfeeding exclusively", "Normal calcium levels", "Early weaning"],
+            answer: 0
+        },
+        {
+            question: "When does a child typically need added nutrition to feeding (introduction of weaning foods)?",
+            options: ["At 2 months", "At 4 months", "At 9 months", "At 1 year"],
+            answer: 1
+        },
+        {
+            question: "When is considered the best time for weaning?",
+            options: ["First month of life", "In the second half of the first year", "At 18 months", "At 2 years"],
+            answer: 1
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+
+    const questionsWrapper = document.getElementById('questions-wrapper');
+    const questionCounter = document.getElementById('question-counter');
+    const scoreCounter = document.getElementById('score-counter');
+    const progressBar = document.getElementById('progress-bar');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const quizContainer = document.getElementById('quiz-container');
+    const resultsScreen = document.getElementById('results-screen');
+    const finalScore = document.getElementById('final-score');
+    const resultMessage = document.getElementById('result-message');
+
+    function buildQuiz() {
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = `question-card ${index === 0 ? 'active' : ''}`;
+            card.id = `question-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `<button class="option-btn" onclick="selectOption(${index}, ${optIndex})">${String.fromCharCode(65 + .5 * 0 + optIndex)}. ${opt}</button>`;
             });
-        }
 
-        function selectOption(index, btnElement) {
-            if (selectedOption !== null) return;
-            
-            selectedOption = index;
-            const correctIndex = quizData[currentQuestion].a;
-            const options = document.querySelectorAll('.option');
-            
-            if (index === correctIndex) {
-                btnElement.classList.add('correct');
-                uiElements.feedback.textContent = "Correct!";
-                uiElements.feedback.style.color = "#2e7d32";
-                score++;
-                uiElements.scoreCounter.textContent = `Score: ${score}`;
-            } else {
-                btnElement.classList.add('incorrect');
-                options[correctIndex].classList.add('correct');
-                uiElements.feedback.textContent = "Incorrect.";
-                uiElements.feedback.style.color = "#c62828";
-            }
-            
-            uiElements.nextBtn.disabled = false;
-        }
-
-        uiElements.nextBtn.addEventListener('click', () => {
-            currentQuestion++;
-            if (currentQuestion < quizData.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
+            card.innerHTML = `
+                <div class="question-text">${index + 1}. ${q.question}</div>
+                <div class="options-list">${optionsHtml}</div>
+            `;
+            questionsWrapper.appendChild(card);
         });
+        updateControls();
+    }
 
-        function showResults() {
-            uiElements.quiz.style.display = 'none';
-            uiElements.results.style.display = 'block';
-            const percentage = Math.round((score / quizData.length) * 100);
-            uiElements.finalScore.textContent = `${percentage}%`;
-            
-            let color = "#c62828";
-            if (percentage >= 80) color = "#2e7d32";
-            else if (percentage >= 60) color = "var(--secondary)";
-            
-            uiElements.finalScore.style.borderColor = color;
-            uiElements.finalScore.style.color = color;
+    function selectOption(qIndex, optIndex) {
+        if (userAnswers[qIndex] !== null) return; // Already answered
+
+        userAnswers[qIndex] = optIndex;
+        const q = quizData[qIndex];
+        const card = document.getElementById(`question-${qIndex}`);
+        const buttons = card.querySelectorAll('.option-btn');
+
+        if (optIndex === q.answer) {
+            buttons[optIndex].classList.add('correct');
+            score++;
+        } else {
+            buttons[optIndex].classList.add('incorrect');
+            buttons[q.answer].classList.add('correct');
         }
 
-        loadQuestion();
-    </script>
+        // Disable all buttons for this question
+        buttons.forEach(btn => btn.disabled = true);
+
+        scoreCounter.textContent = `Score: ${score}`;
+        nextBtn.disabled = false;
+
+        // Auto advance after short delay on mobile/desktop if desired, or let user click Next
+    }
+
+    function updateControls() {
+        questionCounter.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        progressBar.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+
+        prevBtn.disabled = currentQuestion === 0;
+
+        if (userAnswers[currentQuestion] !== null) {
+            nextBtn.disabled = false;
+        } else {
+            nextBtn.disabled = true;
+        }
+
+        if (currentQuestion === quizData.length - 1) {
+            nextBtn.textContent = 'Finish Quiz';
+        } else {
+            nextBtn.textContent = 'Next';
+        }
+    }
+
+    function showQuestion(index) {
+        document.querySelectorAll('.question-card').forEach(card => card.classList.remove('active'));
+        document.getElementById(`question-${index}`).classList.add('active');
+        currentQuestion = index;
+        updateControls();
+    }
+
+    function nextQuestion() {
+        if (currentQuestion < quizData.length - 1) {
+            showQuestion(currentQuestion + 1);
+        } else {
+            showResults();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            showQuestion(currentQuestion - 1);
+        }
+    }
+
+    function showResults() {
+        quizContainer.style.display = 'none';
+        resultsScreen.style.display = 'block';
+        finalScore.textContent = `${score} / ${quizData.length}`;
+
+        let percentage = (score / quizData.length) * 100;
+        let msg = "";
+        if (percentage >= 90) {
+            msg = "Outstanding! Excellent mastery of the lecture notes.";
+        } else if (percentage >= 75) {
+            msg = "Great job! Strong understanding of the material.";
+        } else if (percentage >= 60) {
+            msg = "Good effort! Review the lecture notes to strengthen weak areas.";
+        } else {
+            msg = "Keep studying! Review the lecture texts thoroughly and try again.";
+        }
+        resultMessage.textContent = msg;
+    }
+
+    function restartQuiz() {
+        currentQuestion = 0;
+        score = 0;
+        userAnswers.fill(null);
+        scoreCounter.textContent = `Score: 0`;
+        
+        // Reset buttons and classes
+        questionsWrapper.innerHTML = '';
+        buildQuiz();
+
+        resultsScreen.style.display = 'none';
+        quizContainer.style.display = 'block';
+        showQuestion(0);
+    }
+
+    // Initialize quiz on load
+    window.onload = buildQuiz;
+</script>
+
 </body>
 </html>
