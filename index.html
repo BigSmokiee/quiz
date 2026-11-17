@@ -1,33 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediatric Nursing Comprehensive 100-Question MCQ Quiz</title>
+    <title>اختبار أخلاقيات المهنة - 50 سؤال MCQ</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
+            --primary: #0f766e;
+            --primary-dark: #115e59;
             --success: #16a34a;
+            --success-bg: #dcfce7;
             --danger: #dc2626;
-            --bg: #f8fafc;
+            --danger-bg: #fee2e2;
+            --bg: #f1f5f9;
             --card-bg: #ffffff;
             --text: #1e293b;
             --text-light: #64748b;
-            --border: #e2e8f0;
+            --border: #cbd5e1;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.5;
+            line-height: 1.6;
             padding: 1rem;
         }
 
@@ -35,8 +37,8 @@
             max-width: 800px;
             margin: 0 auto;
             background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             margin-bottom: 2rem;
         }
@@ -50,11 +52,11 @@
 
         header h1 {
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         header p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.9;
         }
 
@@ -62,10 +64,19 @@
             padding: 1.5rem;
         }
 
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            font-weight: bold;
+        }
+
         .progress-container {
-            background: var(--border);
+            background: #e2e8f0;
             border-radius: 999px;
-            height: 10px;
+            height: 12px;
             width: 100%;
             margin-bottom: 1.5rem;
             overflow: hidden;
@@ -78,65 +89,71 @@
             transition: width 0.3s ease;
         }
 
-        .quiz-info {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-light);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
         .question-card {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .question-card.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .question-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
             color: var(--text);
+            background: #f8fafc;
+            padding: 1rem;
+            border-right: 4px solid var(--primary);
+            border-radius: 8px;
         }
 
         .options-list {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.8rem;
             margin-bottom: 1.5rem;
         }
 
         .option-btn {
             background: white;
             border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            text-align: left;
-            font-size: 0.95rem;
+            border-radius: 10px;
+            padding: 0.9rem 1.1rem;
+            text-align: right;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s ease;
             color: var(--text);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
         }
 
         .option-btn:hover:not(:disabled) {
             border-color: var(--primary);
-            background: #eff6ff;
+            background: #f0fdfa;
         }
 
         .option-btn.correct {
-            background: #dcfce7 !important;
+            background: var(--success-bg) !important;
             border-color: var(--success) !important;
-            color: #166534 !important;
-            font-weight: 600;
+            color: #14532d !important;
+            font-weight: 700;
         }
 
         .option-btn.incorrect {
-            background: #fee2e2 !important;
+            background: var(--danger-bg) !important;
             border-color: var(--danger) !important;
-            color: #991b1b !important;
+            color: #7f1d1d !important;
+            font-weight: 600;
         }
 
         .option-btn:disabled {
@@ -147,61 +164,73 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid var(--border);
-            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.2rem;
+            gap: 0.5rem;
         }
 
         .nav-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
             cursor: pointer;
             font-weight: 600;
             transition: background 0.2s;
         }
 
-        .nav-btn:hover {
+        .nav-btn:hover:not(:disabled) {
             background: var(--primary-dark);
         }
 
         .nav-btn:disabled {
-            background: var(--border);
-            color: var(--text-light);
+            background: #cbd5e1;
+            color: #64748b;
             cursor: not-allowed;
         }
 
         .results-screen {
             display: none;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1.5rem;
         }
 
         .results-screen h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
             color: var(--primary);
         }
 
         .score-display {
-            font-size: 3rem;
-            font-weight: bold;
+            font-size: 3.2rem;
+            font-weight: 800;
             margin: 1.5rem 0;
             color: var(--text);
+            background: #f0fdfa;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--primary);
+        }
+
+        .result-msg {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
         }
 
         .restart-btn {
             background: var(--success);
             color: white;
             border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 0.85rem 2.2rem;
+            border-radius: 10px;
+            font-size: 1.05rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 1rem;
+            transition: background 0.2s;
         }
 
         .restart-btn:hover {
@@ -209,15 +238,10 @@
         }
 
         @media (max-width: 600px) {
-            body {
-                padding: 0.5rem;
-            }
-            header h1 {
-                font-size: 1.25rem;
-            }
-            .question-text {
-                font-size: 1rem;
-            }
+            body { padding: 0.5rem; }
+            header h1 { font-size: 1.25rem; }
+            .question-text { font-size: 1.05rem; }
+            .option-btn { font-size: 0.95rem; padding: 0.8rem; }
         }
     </style>
 </head>
@@ -225,496 +249,291 @@
 
 <div class="container">
     <header>
-        <h1>Pediatric Nursing MCQ Quiz</h1>
-        <p>Second Class Nursing Department | Al-Diwaniyah Technical Institute</p>
+        <h1>اختبار مادة أخلاقيات المهنة (50 سؤال)</h1>
+        <p>اختبار شامل للحفظ والتعاريف والوقائع التاريخية</p>
     </header>
 
     <div class="quiz-body" id="quiz-container">
         <div class="quiz-info">
-            <span id="question-counter">Question 1 of 100</span>
-            <span id="score-counter">Score: 0</span>
+            <span id="question-counter">السؤال 1 من 50</span>
+            <span id="score-counter">النتيجة: 0</span>
         </div>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
 
-        <div id="questions-wrapper">
-            <!-- Questions injected dynamically via JavaScript -->
-        </div>
+        <div id="questions-wrapper"></div>
 
         <div class="navigation-footer">
-            <button class="nav-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
-            <button class="nav-btn" id="next-btn" onclick="nextQuestion()" disabled>Next</button>
+            <button class="nav-btn" id="prev-btn" onclick="prevQuestion()" disabled>السابق</button>
+            <button class="nav-btn" id="next-btn" onclick="nextQuestion()" disabled>التالي</button>
         </div>
     </div>
 
     <div class="results-screen" id="results-screen">
-        <h2>Quiz Completed!</h2>
-        <p>You have successfully finished the 100-question pediatric nursing assessment.</p>
-        <div class="score-display" id="final-score">0 / 100</div>
-        <p id="result-message"></p>
-        <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+        <h2>اكتمل الاختبار بنجاح!</h2>
+        <p>لقد أنهيت جميع أسئلة مادة أخلاقيات المهنة.</p>
+        <div class="score-display" id="final-score">0 / 50</div>
+        <p class="result-msg" id="result-message"></p>
+        <button class="restart-btn" onclick="restartQuiz()">إعادة الاختبار</button>
     </div>
 </div>
 
 <script>
     const quizData = [
-        // Lecture 1 & Newborn Stage (Q1 - Q25)
         {
-            question: "What is defined as the first 4 weeks or first month of life and is a transitional period from intrauterine to extrauterine environment?",
-            options: ["Infant stage", "Newborn stage", "Toddler stage", "Preschool stage"],
+            question: "ما هو المصطلح الذي يُعرف بأنه: \"التطبيق العملي للمبادئ والقيم والعادات الأصلية المستمدة من الإسلام (الأخلاق) الموازنة بين النزعة المادية والرغبة في إشباع الرغبات التي لا حدود لها بعد ظهور التكنولوجيا المتقدمة والجانب الروحي المهم في مسيرة الإنسان الأخلاقية\"؟",
+            options: ["السلوك المهني", "قواعد آداب المهنة", "دستور الآداب المهنية", "قواعد السلوك المهني"],
+            answer: 0
+        },
+        {
+            question: "ما هو المصطلح الذي يُعرف بأنه: \"القواعد الأخلاقية أو مجموعة معايير وأسس ومبادئ متعلقة بالنظم الاجتماعية السائدة التي تفرض القوانين والأنظمة لرفع مستوى المهنة\"؟",
+            options: ["السلوك المهني", "تعريف آداب المهنة", "قواعد السلوك المهني", "القانون"],
             answer: 1
         },
         {
-            question: "What is the normal birth weight range for a newborn infant?",
-            options: ["2.0 - 3.5 kg", "2.5 - 4.5 kg", "3.0 - 5.0 kg", "1.5 - 3.0 kg"],
+            question: "ما هو المصطلح الذي يُعرف بأنه: \"مجموعة من القواعد السلوكية التي تلزم الممارسين لمهنة التمريض القيام بمهامهم بكفاية علمية وعملية تضمن حقوق المستفيدين (المرضى والعاملين) ولا تتعارض مع القيم والمبادئ والمعتقدات والأعراف السائدة في المجتمع العراقي\"؟",
+            options: ["السلوك المهني", "قواعد السلوك المهني", "دستور الآداب المهنية", "القيم"],
             answer: 1
         },
         {
-            question: "By how many days after birth do newborns typically lose 5% to 10% of their body weight?",
-            options: ["1-2 days", "3-4 days", "5-7 days", "10 days"],
+            question: "ما هو المصطلح الذي يُعرف بأنه: \"مجموعة من القواعد والنظم التي تحدد العلاقات الاجتماعية لمجتمع معين وتلزم أفراد ذلك المجتمع باتباع هذه القواعد، ومن أهدافها ضمان حرية الأفراد\"؟",
+            options: ["تعريف القانون", "دستور الآداب المهنية", "قواعد السلوك المهني", "السلوك المهني"],
+            answer: 0
+        },
+        {
+            question: "ما هو المصطلح الذي يُعرف بأنه: \"لائحة بقوانين ووصايا لممارسي المهنة تلزمهم باتباع القواعد الأساسية التي تحكم العلاقات المهنية\"؟",
+            options: ["قواعد السلوك المهني", "تعريف دستور الآداب المهنية", "السلوك المهني", "القانون"],
             answer: 1
         },
         {
-            question: "At what day of life does weight gain typically resume/occur?",
-            options: ["5th day", "7th day", "10th day", "14th day"],
+            question: "ما هي الفئة من المعالجين في الحضارة البابلية التي كانت تُعالج بالنصح والإرشاد وتعتبر المسؤول الأول للتشخيص الأولي للمرض بعد جمع المعلومات ومعاينة المريض؟",
+            options: ["فئة الآسي", "فئة الكاشف", "فئة الجراحين", "فئة الكهنة"],
+            answer: 1
+        },
+        {
+            question: "ما هي الفئة من المعالجين في الحضارة البابلية التي كان عملها يشبه عمل الممرضة أو الطبيب وتقوم بتضميد الجروح وعمل الكمادات ودهن الجسم بالزيت ووصف الأعشاب؟",
+            options: ["فئة الكاشف", "فئة الآسي", "فئة الجراحين", "فئة الكهنة"],
+            answer: 1
+        },
+        {
+            question: "ما هو المصطلح الذي يُعرف في علم الاجتماع بأنه: \"الصفات الشخصية التي يفضلها الأفراد في مجتمع معين مثل الشجاعة، القوة، الاحتمال، الإيثار، ضبط النفس وغيرها من الصفات\"؟",
+            options: ["العادات", "القيم (حسب علم الاجتماع)", "السلوك المهني", "الاتجاهات"],
+            answer: 1
+        },
+        {
+            question: "ما هو المصطلح الذي يُعرف في علم النفس بأنه: \"عبارة عن تنظيمات لأحكام عقلية انفعالية معممة نحو الأشخاص والأشياء والمعاني التي يصدرها الفرد على العالم الإنساني والمادي والاجتماعي الذي يحيطه مفهوم ضمني يعبر عن دوافع الإنسان واتجاهاته ورغباته\"؟",
+            options: ["القيم (حسب علم النفس)", "العادات", "قواعد السلوك المهني", "آداب المهنة"],
+            answer: 0
+        },
+        {
+            question: "من هو الشخص الذي عرف القيم بأنها: \"فكرة يسلك الناس بموجبها سلوكاً معيناً أو هي مبدأ يحكمون به على كيفية تصرفهم وسلوكهم\"؟",
+            options: ["تايلور", "فلورانس نايتنكل", "حمورابي", "القديسة فابيلا"],
+            answer: 0
+        },
+        {
+            question: "ما هو المصطلح الذي يُعرف بأنه: \"استعداد مكتسب دائم لأداء عمل من الأعمال الحركية أو الفعلية أو الخلقية ويكون بطريقة آلية مع السرعة والدقة في المجهود\"؟",
+            options: ["القيم", "العادات", "السلوك المهني", "المهارات"],
+            answer: 1
+        },
+        {
+            question: "في أي سنة تأسست كلية الطب في بغداد وبناء مستشفى تعليمي فيها (المستشفى الجمهوري) واستخدام الممرضات من ذوات الخبرة من خارج العراق؟",
+            options: ["1927", "1933", "1962", "1988"],
+            answer: 0
+        },
+        {
+            question: "في أي عام تم افتتاح أول مدرسة ممرضات هي مدرسة بغداد التي تبعت إدارياً لكلية الطب؟",
+            options: ["1927", "1933", "1962", "1988"],
+            answer: 1
+        },
+        {
+            question: "في أي عام تم افتتاح كلية التمريض في بغداد لتمنح شهادة البكالوريوس في علوم التمريض؟",
+            options: ["1933", "1962", "1988", "1927"],
+            answer: 1
+        },
+        {
+            question: "في أي عام تم افتتاح فرع التمريض في المعهد الطبي الفني لمنح الخريجين شهادة الدبلوم الفني في علوم التمريض؟",
+            options: ["1933", "1962", "1988", "1927"],
             answer: 2
         },
         {
-            question: "Which of the following is NOT a reason for the initial 5% to 10% weight loss in newborns?",
-            options: ["Withdrawal of hormones from mother", "Loss of excessive extracellular fluid", "Passage of meconium and urine", "Increased subcutaneous fat accumulation"],
+            question: "من هي الممرضة الإنكليزية التي وضعت نظاماً معيناً مبنياً على أسس تربوية وعلمية لمهنة التمريض وأنشأت أول مدرسة تمريض في مستشفى القديس توماس في لندن؟",
+            options: ["القديسة فابيلا", "فلورانس نايتنكل", "رفيدة بنت سعيد الأسلمية", "أم سنان الأسلمية"],
+            answer: 1
+        },
+        {
+            question: "من هي الراهبة التي برزت في الديانة المسيحية وأنشأت أول مستشفى مجاني للمرضى؟",
+            options: ["أم ورقة بنت عبد الله", "القديسة فابيلا", "رفيدة الأسلمية", "أم مطاوع الأسلمية"],
+            answer: 1
+        },
+        {
+            question: "ما هو الاسم الذي كان يطلقه العرب في صدر الإسلام على النساء اللواتي يمارسن التضميد والإسعاف؟",
+            options: ["الرهبان", "الأواسي أو الأسيات", "الكواشف", "الحكيمات"],
+            answer: 1
+        },
+        {
+            question: "من أشهر الصحابيات اللواتي برزن في التمريض والإسعاف في صدر الإسلام وتم ذكرها في المنهج (ويُطلق عليها الشهيدة أيضاً)؟",
+            options: ["أم ورقة بنت عبد الله بن الحارث", "فاطمة الزهراء", "خديجة بنت خويلد", "عائشة بنت أبي بكر"],
+            answer: 0
+        },
+        {
+            question: "ما هو المبدأ الأساسي للسلوك المهني الذي ينص على: \"أنه يجب على الممرض أن يقوم بإعلان الحقيقة للمريض واستحصال موافقته قبل القيام بالإجراءات والرعاية الصحية الخاصة بحالته\"؟",
+            options: ["الكرامة", "الأمانة والثقة", "الإقرار بالعلم", "السرية والخصوصية"],
+            answer: 2
+        },
+        {
+            question: "أي من الفئات العلاجية البابلية كان يزاول استئصال العضو المتقيح الذي لا يرجى شفاؤه أو لا يصلح معه العلاج؟",
+            options: ["فئة الكاشف", "فئة الآسي", "فئة الجراحين", "فئة الكهنة"],
+            answer: 2
+        },
+        {
+            question: "ما هي الفئة البابلية التي كانت تعالج بالتمتمات والسحر والشعوذة والأحلام (يدعون المريض ينام ليرى حلماً ثم يفسرونه له)؟",
+            options: ["فئة الكهنة", "فئة الجراحين", "فئة الآسي", "فئة الكاشف"],
+            answer: 0
+        },
+        {
+            question: "أي من الحضارات القديمة اعتبرت \"خلود الروح وعودتها بعد الممات للأجسام\" هي الفلسفة السائدة لديهم، وهم أول من ابتكر علم التحنيط؟",
+            options: ["الحضارة البابلية", "الحضارة المصرية", "الحضارة الصينية", "الحضارة الهندية"],
+            answer: 1
+        },
+        {
+            question: "في أي حضارة تم اكتشاف نبات لعلاج الأمراض النفسية والعصبية وتم استخلاص المادة الفعالة لتصنيع دواء (الارجكتيل)؟",
+            options: ["الحضارة الصينية", "الحضارة الهندية", "الحضارة المصرية", "الحضارة البابلية"],
+            answer: 1
+        },
+        {
+            question: "ما هي المرحلة من مراحل تطور الحضارات البشرية التي ظهرت فيها (الجارة الطيبة) التي تتجسد فيها الخبرات والحنان وحب المساعدة؟",
+            options: ["مرحلة الزراعة", "فترة أو مرحلة الصيد (فترة الجارة الطيبة)", "الحضارة المدنية", "العصر الحديث"],
+            answer: 1
+        },
+        {
+            question: "الحاكم الذي أسس الحضارة البابلية ودون في مسلته كثير من النصائح والإرشادات الصحية وشرع القوانين وفرض العقوبات على الأطباء الفاشلين هو:",
+            options: ["حمورابي", "نبوخذ نصر", "سرجون", "كيلوباترا"],
+            answer: 0
+        },
+        {
+            question: "من سمات التمريض الحديث أن مهنة التمريض تتميز بـ:",
+            options: ["الجمود وعدم التغيير", "المرونة وسرعة التطور والتغيير", "الاعتماد على العمل التطبيقي الفردي حصراً", "الابتعاد عن النظريات العلمية"],
+            answer: 1
+        },
+        {
+            question: "المبدأ الأساسي للسلوك المهني الذي يعرّف بأنه: \"قيمة أساسية يجب تعزيزها وحمايتها عند ممارسة التمريض وتقديم الرعاية للمرضى الغير قادرين على حماية مصالحهم\" هو:",
+            options: ["الكرامة", "العمل بروح الفريق", "تقليل الخطر", "المعرفة والكفاءة المهنية"],
+            answer: 0
+        },
+        {
+            question: "ما هو المبدأ الذي يقصد به: \"كمية ونوعية المعلومات التمريضية المكتسبة والمهارات العملية والاتجاهات والسلوكيات التي تم الحصول عليها أثناء الدراسة\"؟",
+            options: ["الأمانة والثقة", "المعرفة والكفاءة المهنية", "الإقرار بالعلم", "السرية والخصوصية"],
+            answer: 1
+        },
+        {
+            question: "ما هو التصنيف القيمي الذي ينصب فيه اهتمام الفرد على الأمور الفلسفية الفكرية والعلمية ويتجه اتجاهات معرفية وأمثالهم العلماء والفلاسفة؟",
+            options: ["القيم الاقتصادية", "القيم النظرية", "القيم الجمالية", "القيم الدينية"],
+            answer: 1
+        },
+        {
+            question: "ما هو التصنيف القيمي الذي ينصب فيه اهتمام الفرد على ما هو نافع وله مردود مادي وأمثالهم رجال المال والأعمال؟",
+            options: ["القيم الاجتماعية", "القيم الاقتصادية", "القيم السياسية", "القيم النظرية"],
+            answer: 1
+        },
+        {
+            question: "ما هو التصنيف القيمي الذي ينصب فيه اهتمام الفرد على ما هو جميل من مظهر وانسجام وتنسيق وتذوق الجمال بكل أشكاله؟",
+            options: ["القيم الجمالية", "القيم الدينية", "القيم الاجتماعية", "القيم النظرية"],
+            answer: 0
+        },
+        {
+            question: "ما هو التصنيف القيمي الذي يتميز فيه الفرد بالعطف والحنان وخدمة الآخرين واختلاط وإقامة العلاقات الاجتماعية الطيبة مع الآخرين؟",
+            options: ["القيم السياسية", "القيم الاجتماعية", "القيم الاقتصادية", "القيم الجمالية"],
+            answer: 1
+        },
+        {
+            question: "ما هو التصنيف القيمي الذي ينصب فيه اهتمام الفرد على معرفة ما وراء العالم المحسوس (الروحانيات) وإشباع حاجاته الدينية من خلال السعي إلى مرضاة الله؟",
+            options: ["القيم الدينية", "القيم النظرية", "القيم الأخلاقية", "القيم الاجتماعية"],
+            answer: 0
+        },
+        {
+            question: "ما هو التصنيف القيمي الذي ينصب فيه اهتمام الفرد على الأمور السياسية وحل المشكلات الجماهيرية ليكون قائداً وفقاً لأهدافه؟",
+            options: ["القيم الاقتصادية", "القيم السياسية", "القيم الاجتماعية", "القيم النظرية"],
+            answer: 1
+        },
+        {
+            question: "أي مما يلي يعتبر من (القيم الشخصية للممرضة) الواردة في المحاضرة السادسة؟",
+            options: ["الانتباه وسرعة البديهة", "الصبر والمثابرة عند الاهتمام بالمريض", "التواضع بعيداً عن الغرور وحب الظهور", "تبادل المحبة والثقة مع المريض"],
+            answer: 2
+        },
+        {
+            question: "أي مما يلي يعتبر من (القيم المهنية للممرضة) الواردة في المحاضرة السادسة؟",
+            options: ["الإيثار وتجاوز الذات", "التحلي بروح الثبات والصلابة عند مواجهة المواقف الصعبة", "التواضع بعيداً عن الغرور", "الانتباه وسرعة البديهة"],
             answer: 3
         },
         {
-            question: "What is the average height (length) for newborn baby boys?",
-            options: ["47.5 cm", "49 cm", "50 cm", "53.75 cm"],
+            question: "من طرائق تكوين القيم التي يقصد بها إشباع الحاجات الأساسية للفرد من الجوع والعطش والنوم هي:",
+            options: ["الخبرات الانفعالية", "إشباع الحوافز الفسيولوجية الأولى", "حب ورضا الآخرين", "فرضها بواسطة سلطات أعلى"],
+            answer: 1
+        },
+        {
+            question: "ما هو نوع العادات التي تتمثل في نشاط حركي أو أي عمل يقوم به الفرد مثل المشي، الكتابة، واستخدام الأدوات والآلات (ومثالها في التمريض قياس الحرارة والضغط)؟",
+            options: ["العادات الحركية", "العادات الفكرية", "العادات الخلقية", "العادات الاجتماعية"],
+            answer: 0
+        },
+        {
+            question: "وفقاً لقانون مجلس التمريض العالمي، ما هي المسؤولية الأساسية الأولى للممرضة؟",
+            options: ["جلب الراحة والطمأنينة النفسية", "شفاء المريض والسعي المتواصل لتحسين حالته الصحية", "القضاء على الألم وتقليل المعاناة", "الوقاية من الأمراض"],
+            answer: 1
+        },
+        {
+            question: "من حقوق المريض الأساسية حسب المحاضرة الثالثة والرابعة:",
+            options: ["رفض أي إجراء صحي يتلقاه", "اختيار الراتب المناسب للخبرة", "الانتماء للمجالس والنقابات المهنية", "الحصول على امتيازات وظيفية شاملة"],
+            answer: 0
+        },
+        {
+            question: "من حقوق الممرض الأساسية الواردة في المنهج:",
+            options: ["معرفة تشخيصه وكافة الإجراءات المتعلقة بصحته", "ممارسة شعائره الدينية بحرية داخل المستشفى", "الحماية من التعرض لأية تحرشات جنسية", "اختيار الممرض الذي يقدم له العناية"],
             answer: 2
         },
         {
-            question: "What is the average height (length) for newborn baby girls?",
-            options: ["47.5 cm", "49 cm", "50 cm", "53.75 cm"],
+            question: "ما هي طرائق تكوين القيم التي تلعب فيها الأسرة وتربية الأبناء دوراً أساسياً من خلال المواقف الطيبة أو غيرها؟",
+            options: ["إشباع الحوافز الفسيولوجية", "الخبرات الانفعالية", "الفرض بالسلطة العليا", "حب ورضا الآخرين"],
             answer: 1
         },
         {
-            question: "What is the normal height range for both newborn boys and girls?",
-            options: ["45.0 - 50.0 cm", "47.5 - 53.75 cm", "50.0 - 55.0 cm", "46.0 - 52.0 cm"],
-            answer: 1
+            question: "في أي حضارة كان يُعتقد أن الأعراض المرضية نتجت عن التقلبات الجوية من رطوبة وبرودة وحرارة عالية، وكانت المعالجات تشمل الأعشاب والتأمل والحمية؟",
+            options: ["الحضارة الصينية", "الحضارة الهندية", "الحضارة البابلية", "الحضارة المصرية"],
+            answer: 0
         },
         {
-            question: "What is the normal head circumference range for a newborn?",
-            options: ["30.5 - 33 cm", "33 - 35 cm", "35 - 37 cm", "28 - 30 cm"],
-            answer: 1
+            question: "أي من الآداب المهنية التالية تُعد التزاماً أساسياً للممرضة عند تعاملها مع الأجهزة والأدوات؟",
+            options: ["الدقة عند استخدام الأجهزة والأدوات والمحافظة عليها", "ترك الأجهزة مفتوحة لسهولة الوصول إليها", "الاعتماد على التخمين في قياس العلامات الحيوية", "عدم مراجعة تعليمات الأجهزة الطبية"],
+            answer: 0
         },
         {
-            question: "How does the head size compare to total body length in a newborn?",
-            options: ["1/2 total body length", "1/3 total body length", "1/4 total body length", "1/5 total body length"],
+            question: "ما هو الهدف الأساسي من إنشاء فلورانس نايتنكل لمدارس التمريض؟",
+            options: ["إعداد الممرضات وتدريبهن تدريباً كاملاً وتأهيلهن علمياً وعملياً", "جمع التبرعات المالية للمستشفيات", "تخريج طبيبات مساويات للأطباء الرجال", "نشر الفلسفة والدين في أوروبا"],
+            answer: 0
+        },
+        {
+            question: "كيف يجب أن تكون علاقة الممرضة مع الطبيب وفقاً لقواعد آداب المهنة؟",
+            options: ["مبنية على أساس التقدير والاحترام المتبادل والتعاون وتنفيذ وصفاته وتعليماته بكل دقة وأمانة", "مستقلة تماماً ودون الرجوع لتعليمات الطبيب", "مقتصرة على تبادل الأحاديث الجانبية", "متوترة بسبب كثرة الضغوط العملية"],
+            answer: 0
+        },
+        {
+            question: "كم بلغ عدد إعداديات التمريض للبنين في القطر حسب ما ذكر في تاريخ التمريض بالعراق؟",
+            options: ["30 مدرسة", "31 إعدادية للبنات", "17 إعدادية للبنين", "4 إعداديات فقط"],
             answer: 2
         },
         {
-            question: "How many fontanels does the newborn skull possess?",
-            options: ["1", "2", "3", "4"],
-            answer: 1
-        },
-        {
-            question: "What is the shape of the anterior fontanel?",
-            options: ["Triangular", "Diamond in shape", "Round", "Oval"],
-            answer: 1
-        },
-        {
-            question: "The anterior fontanel is formed by the junction of which sutures?",
-            options: ["Sagittal, coronal, and frontal sutures", "Lambdoid and sagittal sutures", "Metopic and lambdoid sutures", "Coronal and occipital sutures"],
+            question: "ما هو المبدأ المتعلق بـ \"تلافي الوقوع في الخطأ وبالتالي تقليل الخطر على المريض وتوفير بيئة علاجية آمنة خالية من عوامل الخطر\"؟",
+            options: ["تقليل الخطر", "الإقرار بالعلم", "الأمانة والثقة", "العمل بروح الفريق"],
             answer: 0
         },
         {
-            question: "Between which bones is the anterior fontanel located?",
-            options: ["Occipital and parietal bones", "2 frontal and 2 parietal bones", "Temporal and frontal bones", "Maxilla and mandible"],
-            answer: 1
-        },
-        {
-            question: "What are the typical dimensions (length and width) of the anterior fontanel?",
-            options: ["1-2 cm length and 1 cm width", "3-4 cm in length and 2-3 cm width", "5-6 cm in length and 4 cm width", "2-3 cm in length and 1 cm width"],
-            answer: 1
-        },
-        {
-            question: "At what age does the anterior fontanel typically close?",
-            options: ["2-4 months", "6-9 months", "12-18 months", "24-36 months"],
-            answer: 2
-        },
-        {
-            question: "What is the shape of the posterior fontanel?",
-            options: ["Triangular", "Diamond in shape", "Square", "Circular"],
+            question: "ما هو الوصف الصحيح لتاريخ مهنة التمريض في بدايات البشرية؟",
+            options: ["بدأت كرسالة تؤديها المرأة متطوعة دافعها إنساني وديني وإطارها التضحية ونكران الذات", "بدأت مهنة رسمية برواتب حكومية ثابتة منذ عصور ما قبل التاريخ", "كانت ممارسة حصرية للرجال في المعابد والقصور", "بدأت مباشرة بعد تأسيس المستشفيات الحديثة في أوروبا"],
             answer: 0
-        },
-        {
-            question: "Between which bones is the posterior fontanel located?",
-            options: ["2 frontal and 2 parietal bones", "Occipital and 2 parietal bones", "Temporal and occipital bones", "Frontal and nasal bones"],
-            answer: 1
-        },
-        {
-            question: "At what age does the posterior fontanel close?",
-            options: ["Between 2-4 months of age", "Between 6-8 months of age", "Between 12-18 months of age", "Between 18-24 months of age"],
-            answer: 0
-        },
-        {
-            question: "What is the normal chest circumference of a newborn?",
-            options: ["33 to 35 cm", "30.5 to 33 cm", "36 to 40 cm", "28 to 30 cm"],
-            answer: 1
-        },
-        {
-            question: "How does the newborn chest circumference usually compare to the head circumference?",
-            options: ["2-3 cm greater than head circumference", "Equal to head circumference", "2-3 cm less than head circumference", "5 cm less than head circumference"],
-            answer: 2
-        },
-        {
-            question: "What is the normal temperature range (in Celsius) for a newborn's vital signs?",
-            options: ["35.0 to 36.0 C", "36.3 to 37.2 C", "37.5 to 38.0 C", "34.5 to 35.5 C"],
-            answer: 1
-        },
-        {
-            question: "What is the normal pulse rate range for a newborn?",
-            options: ["80 to 120 beats/min", "100 to 140 beats/min", "120 to 160 beats/min", "140 to 180 beats/min"],
-            answer: 2
-        },
-        {
-            question: "What is the normal respiration rate range for a newborn according to physiological growth vital signs?",
-            options: ["20 to 30 breaths/min", "35 to 50 breaths/min", "60 to 80 breaths/min", "15 to 25 breaths/min"],
-            answer: 1
-        },
-        {
-            question: "What is the average blood pressure at birth (Systolic/Diastolic)?",
-            options: ["120/80", "90/60", "75/42", "100/70"],
-            answer: 2
-        },
-
-        // Apgar Score & Senses & Motor Development (Q26 - Q50)
-        {
-            question: "In the APGAR score, what score is given for a pulse rate greater than 100 beats per minute?",
-            options: ["0 points", "1 point", "2 points", "3 points"],
-            answer: 2
-        },
-        {
-            question: "In the APGAR score, what score is given for blue or pale appearance (skin color)?",
-            options: ["0 points", "1 point", "2 points", "3 points"],
-            answer: 0
-        },
-        {
-            question: "In the APGAR score, what score corresponds to a 'strong crying' respiration response?",
-            options: ["0 points", "1 point", "2 points", "3 points"],
-            answer: 2
-        },
-        {
-            question: "In the APGAR score, what score is given for 'some flexion of arms and legs' under activity/muscle tone?",
-            options: ["0 points", "1 point", "2 points", "3 points"],
-            answer: 1
-        },
-        {
-            question: "In the APGAR score, what does grimace score 1 point represent?",
-            options: ["No response to stimulation, floppy", "Grimace on suction or aggressive stimulation", "Cry on stimulation", "Active flexion against resistance"],
-            answer: 1
-        },
-        {
-            question: "Which of the following is NOT one of the 5 parameters rated by the Apgar score?",
-            options: ["Heart rate / Pulse", "Blood glucose level", "Muscle tone / Activity", "Respiration / Crying"],
-            answer: 1
-        },
-        {
-            question: "Which of the following senses are listed for a newborn?",
-            options: ["Touch, vision, hearing, taste, smell", "Touch and vision only", "Hearing and taste only", "Smell and touch only"],
-            answer: 0
-        },
-        {
-            question: "How are a newborn's movements described under gross motor development?",
-            options: ["Coordinated, deliberate, and precise", "Random, diffuse, and uncoordinated", "Slow, rigid, and restricted", "Symmetric and highly controlled"],
-            answer: 1
-        },
-        {
-            question: "What is a characteristic fine motor development trait of a newborn regarding their hands?",
-            options: ["Keeps hands wide open with fingers extended", "Holds hand in fist", "Points with index finger", "Picks up small objects"],
-            answer: 1
-        },
-        {
-            question: "What does the newborn do with arms and legs when crying?",
-            options: ["Extends them straight out", "Draws arms and legs to body", "Relaxes them completely", "Waves them rapidly"],
-            answer: 1
-        },
-        {
-            question: "What are primitive reflexes (infantile or newborn reflexes) defined as?",
-            options: ["Voluntary conscious actions", "Involuntary or automatic actions in response to something without thinking", "Learned motor skills", "Pathological neurologic signs"],
-            answer: 1
-        },
-        {
-            question: "Into how many main groups are general reflexes divided?",
-            options: ["2", "3", "4", "5"],
-            answer: 1
-        },
-        {
-            question: "Which of the following belongs to the feeding reflexes group?",
-            options: ["Moro, Startle, Grasping", "Cough, Sneezing, Yawing", "Rooting, Gag and Swallowing, Sucking", "Stepping, Babinski, Tonic-Neck"],
-            answer: 2
-        },
-        {
-            question: "Which of the following belongs to the protective reflexes group?",
-            options: ["Rooting and Sucking", "Cough, Sneezing, Yawning, Blinking", "Moro and Grasping", "Stepping and Babinski"],
-            answer: 1
-        },
-        {
-            question: "Which of the following belongs to the motor movement reflexes group?",
-            options: ["Cough and Sneeze", "Rooting and Swallowing", "Moro, Startle, Grasping, Tonic-Neck, Stepping, Babinski", "Blinking and Yawning"],
-            answer: 2
-        },
-        {
-            question: "Which protective reflex involves blinking your eyes when touched or when a sudden bright light appears?",
-            options: ["Cough reflex", "Blinking reflex", "Gag reflex", "Sneeze reflex"],
-            answer: 1
-        },
-        {
-            question: "Which protective reflex occurs when the body needs additional oxygen?",
-            options: ["Yawn reflex", "Sneeze reflex", "Cough reflex", "Gag reflex"],
-            answer: 0
-        },
-        {
-            question: "In the Sucking reflex, what happens when a finger or nipple is placed in the infant's mouth?",
-            options: ["The infant turns away", "The infant will suck", "The infant gags", "The infant cries"],
-            answer: 1
-        },
-        {
-            question: "In the Rooting reflex, what happens if the infant's cheek is stroked?",
-            options: ["The infant turns towards the side stroked and makes sucking motions", "The infant extends its toes", "The infant throws out its arms", "The infant grasps the finger"],
-            answer: 0
-        },
-        {
-            question: "In the Swallowing reflex, when liquid moves into the mouth, what does the tongue do?",
-            options: ["Pushes it out of the mouth", "Moves it to the back of the mouth for swallowing", "Stays completely flat", "Bites down on the liquid"],
-            answer: 1
-        },
-        {
-            question: "What happens during the Grasping (Palmar) reflex?",
-            options: ["Babies extend their toes", "When the inside of the palm is touched, babies grasp a finger tightly", "Babies throw out their arms", "Babies make crawling movements"],
-            answer: 1
-        },
-        {
-            question: "At what gestational age does the palmar/grasp reflex begin?",
-            options: ["28 weeks of gestation", "32 weeks of gestation", "36 weeks of gestation", "39 weeks of gestation"],
-            answer: 1
-        },
-        {
-            question: "At what age does the palmar grasp reflex disappear and get replaced by voluntary grasp?",
-            options: ["Disappears at 3-4 months, replaced at 4-5 months", "Disappears at 1 month, replaced at 2 months", "Disappears at 6 months, replaced at 9 months", "Disappears at 12 months, replaced at 15 months"],
-            answer: 0
-        },
-        {
-            question: "What is another name for the Tonic neck reflex?",
-            options: ["Fencing posture / asymmetric tonic neck reflex", "Stepping posture", "Moro posture", "Startle posture"],
-            answer: 0
-        },
-        {
-            question: "When does the tonic neck reflex appear and when does it disappear?",
-            options: ["Present at birth, disappears at 2 months", "Present at 1 month of age, disappears at around 4 months", "Present at 3 months, disappears at 6 months", "Present at 6 months, disappears at 1 year"],
-            answer: 1
-        },
-
-        // Lecture 2 & Prematurity & Complications (Q51 - Q75)
-        {
-            question: "What is a baby born before how many weeks of pregnancy considered premature (preterm)?",
-            options: ["35 weeks", "37 weeks", "38 weeks", "40 weeks"],
-            answer: 1
-        },
-        {
-            question: "What weight threshold defines Low Birth Weight (LBW) for many premature babies?",
-            options: ["Less than 3,000 grams", "Less than 2,500 grams", "Less than 2,000 grams", "Less than 1,500 grams"],
-            answer: 1
-        },
-        {
-            question: "Which of the following body areas of a premature newborn still need to mature and fully develop?",
-            options: ["Lungs, digestive system, immune system, and skin", "Hair, nails, and teeth only", "Heart and bones only", "Kidneys and liver only"],
-            answer: 0
-        },
-        {
-            question: "Which of the following is classified as a maternal factor/cause of prematurity?",
-            options: ["Placenta Previa", "Multiple pregnancy (twins/triplets)", "Preeclampsia (high blood pressure of pregnancy)", "Intrauterine growth retardation (IUGR)"],
-            answer: 2
-        },
-        {
-            question: "Which of the following is classified as a factor involving the pregnancy causing prematurity?",
-            options: ["Chronic medical illness (heart/kidney disease)", "Placenta Previa (low lying position of the placenta)", "Urinary tract infections", "Drug use (such as cocaine)"],
-            answer: 1
-        },
-        {
-            question: "Which of the following is a factor involving the fetus causing prematurity?",
-            options: ["Abnormal structure of the uterus", "Premature rupture of membranes", "Multiple pregnancy (twins, triplets or more)", "Previous preterm birth"],
-            answer: 2
-        },
-        {
-            question: "What is a characteristic feature of breast tissue in an infant of less than 36 weeks' gestation?",
-            options: ["Has 5 to 6 mm of breast tissue", "Has no breast tissue", "Has raised areola with 3 mm tissue", "Has well-developed milk ducts"],
-            answer: 1
-        },
-        {
-            question: "At what gestational age do infants typically have 5 to 6 mm of breast tissue?",
-            options: ["32 to 33 weeks", "34 weeks", "36 weeks", "39 to 40 weeks"],
-            answer: 3
-        },
-        {
-            question: "What is Kangaroo Mother Care?",
-            options: ["A method of feeding premature babies via gavage tube", "A method of caring for premature babies using skin-to-skin contact with the parent", "A mechanical ventilation technique", "An incubator temperature regulation system"],
-            answer: 1
-        },
-        {
-            question: "When suctioning an infant in the delivery room before birth, what is suctioned first?",
-            options: ["The infant's nose is suctioned first, then the mouth", "The infant's mouth is suctioned first, then his nose", "Both nose and mouth simultaneously", "The throat via endotracheal tube"],
-            answer: 1
-        },
-        {
-            question: "What should be placed on an infant's head immediately after delivery to prevent heat loss?",
-            options: ["A sterile bandage", "A cap", "An oxygen mask", "A cooling band"],
-            answer: 1
-        },
-        {
-            question: "Where is the identification (ID) band placed on the infant after delivery?",
-            options: ["On the infant's neck and ankle", "On the infant's wrist and leg", "On the infant's chest and arm", "On the infant's forehead"],
-            answer: 1
-        },
-        {
-            question: "What is defined as the initial step in the process of attraction and response between the newborn and the parents?",
-            options: ["Parent-infant bonding", "Neonatal resuscitation", "Kangaroo care initiation", "Apgar scoring"],
-            answer: 0
-        },
-        {
-            question: "Which of the following is listed as a complication of prematurity involving the brain?",
-            options: ["Retinopathy of Prematurity (ROP)", "Interventricular Hemorrhage (IVH)", "Respiratory Distress Syndrome (RDS)", "Hypocalcemia"],
-            answer: 1
-        },
-        {
-            question: "Which endocrine complication is listed under complications of prematurity?",
-            options: ["Hypocalcemia", "Hyperglycemia", "Hypothyroidism", "Hyperparathyroidism"],
-            answer: 0
-        },
-        {
-            question: "What eye complication is listed under complications of prematurity?",
-            options: ["Cataracts", "Retinopathy of Prematurity (ROP)", "Glaucoma", "Strabismus"],
-            answer: 1
-        },
-
-        // Lecture 3 & Care at Birth & Nursery (Q76 - Q85)
-        {
-            question: "How many basic needs of a baby are identified at birth?",
-            options: ["Two basic needs", "Three basic needs", "Four basic needs", "Five basic needs"],
-            answer: 2
-        },
-        {
-            question: "Which of the following are the FOUR basic needs at birth?",
-            options: ["Thermal protection, Normal breathing, Mother's milk, Protection from infection", "Oxygen therapy, IV fluids, Antibiotics, Incubator", "Weaning, Immunization, Bathing, Diapering", "Vitamin D, Iron drops, Massage, Swaddling"],
-            answer: 0
-        },
-        {
-            question: "What is the recommended delivery room temperature for the 'Warm chain' at delivery?",
-            options: ["20 C", "22 C", "25 C", "30 C"],
-            answer: 2
-        },
-        {
-            question: "What does WHO 'Five cleans' to prevent infection at delivery include?",
-            options: ["Hands of attendants washed with soap, Surface for delivery, Cutting instrument for cord, String to tie cord, Cloth to wrap baby and mother", "Sterile gloves, Antiseptic wash, Gauze pads, Antibiotic eye drops, Alcohol swabs", "Mask, Gown, Cap, Sterile drape, Scalpel", "Soap, Water, Towel, Blanket, Basin"],
-            answer: 0
-        },
-        {
-            question: "What should be done regarding the umbilical cord care after delivery according to 'Clean chain'?",
-            options: ["Apply antibiotic powder daily", "Keep the cord clean and dry; do not apply anything", "Apply traditional oil or herbal pastes", "Wash with antiseptic soap twice a day"],
-            answer: 1
-        },
-        {
-            question: "What is the temperature maintenance range for a premature baby in the nursery?",
-            options: ["34.0 - 35.0 C", "35.5 - 36.5 C", "36.5 - 37.5 C", "37.0 - 38.0 C"],
-            answer: 1
-        },
-        {
-            question: "What is the initial feeding amount and solution often given to a premature baby in the nursery?",
-            options: ["10-20 cc of full formula", "2-4 cc and 5 percent sugar solution, increased slowly", "30 cc of cow milk", "50 cc of glucose water"],
-            answer: 1
-        },
-        {
-            question: "What medications are specified under nursery care for premature babies?",
-            options: ["Vitamin, Iron", "Morphine, Codeine", "Insulin, Thyroxine", "Antihistamines, Steroids"],
-            answer: 0
-        },
-
-        // Lecture 4, 5, 6 & Growth, Development, Dentition, Feeding (Q86 - Q100)
-        {
-            question: "How is growth defined?",
-            options: ["Progressive increase in skill and capacity of function", "Increase in physical size of the whole or any of its part (measured in inches, cm, kg, pound)", "Emotional maturity development", "Acquisition of language and speech"],
-            answer: 1
-        },
-        {
-            question: "How is development defined?",
-            options: ["Increase in physical height and weight", "Progressive increase in skill and capacity of function", "Doubling of birth weight", "Eruption of deciduous teeth"],
-            answer: 1
-        },
-        {
-            question: "At what age does the infant's birth weight typically double?",
-            options: ["3 months", "6 months", "1 year", "2 years"],
-            answer: 1
-        },
-        {
-            question: "At what age does the infant's birth weight typically treble (triple)?",
-            options: ["6 months", "1 year", "2 years", "4 years"],
-            answer: 1
-        },
-        {
-            question: "At what age is weight 4 times (4X) the birth weight?",
-            options: ["1 year", "2 years", "3 years", "4 years"],
-            answer: 1
-        },
-        {
-            question: "What is the normal Intelligence Quotient (I.Q.) range?",
-            options: ["70 - 89", "90 - 109", "110 - 139", "140 and over"],
-            answer: 1
-        },
-        {
-            question: "What I.Q. score classifies an individual as gifted?",
-            options: ["90 - 109", "110 - 129", "130 - 139", "140 or over"],
-            answer: 3
-        },
-        {
-            question: "According to emotional development stages (Erikson stages in text), what sense is associated with Infancy (0-1 year)?",
-            options: ["Sense of autonomy", "Sense of initiative", "Sense of trust", "Industry"],
-            answer: 2
-        },
-        {
-            question: "According to emotional development, what sense is associated with Toddler stage (1-3 years)?",
-            options: ["Sense of trust", "Sense of autonomy", "Sense of initiative", "Identity"],
-            answer: 1
-        },
-        {
-            question: "At what age do deciduous (temporary) teeth typically begin to erupt in a child?",
-            options: ["3 months", "6 months", "9 months", "12 months"],
-            answer: 1
-        },
-        {
-            question: "At what age do permanent teeth begin to appear?",
-            options: ["4 years", "6 years", "8 years", "10 years"],
-            answer: 1
-        },
-        {
-            question: "Which of the following is listed as a cause of delayed eruption of teeth in a child?",
-            options: ["Excessive calcium intake", "Disease of child during dentition / Decrease Ca in food", "Mouth breathing", "Thumb sucking"],
-            answer: 1
-        },
-        {
-            question: "Which of the following is listed as a cause of deformity of teeth?",
-            options: ["Mouth breathing, Thumb sucking, Tongue sucking, Accident", "Breastfeeding exclusively", "Normal calcium levels", "Early weaning"],
-            answer: 0
-        },
-        {
-            question: "When does a child typically need added nutrition to feeding (introduction of weaning foods)?",
-            options: ["At 2 months", "At 4 months", "At 9 months", "At 1 year"],
-            answer: 1
-        },
-        {
-            question: "When is considered the best time for weaning?",
-            options: ["First month of life", "In the second half of the first year", "At 18 months", "At 2 years"],
-            answer: 1
         }
     ];
 
+    const letters = ['أ', 'ب', 'ج', 'د'];
     let currentQuestion = 0;
     let score = 0;
     let userAnswers = new Array(quizData.length).fill(null);
@@ -731,6 +550,7 @@
     const resultMessage = document.getElementById('result-message');
 
     function buildQuiz() {
+        questionsWrapper.innerHTML = '';
         quizData.forEach((q, index) => {
             const card = document.createElement('div');
             card.className = `question-card ${index === 0 ? 'active' : ''}`;
@@ -738,7 +558,7 @@
 
             let optionsHtml = '';
             q.options.forEach((opt, optIndex) => {
-                optionsHtml += `<button class="option-btn" onclick="selectOption(${index}, ${optIndex})">${String.fromCharCode(65 + .5 * 0 + optIndex)}. ${opt}</button>`;
+                optionsHtml += `<button class="option-btn" onclick="selectOption(${index}, ${optIndex})"><span><strong>${letters[optIndex]})</strong></span> <span>${opt}</span></button>`;
             });
 
             card.innerHTML = `
@@ -751,7 +571,7 @@
     }
 
     function selectOption(qIndex, optIndex) {
-        if (userAnswers[qIndex] !== null) return; // Already answered
+        if (userAnswers[qIndex] !== null) return;
 
         userAnswers[qIndex] = optIndex;
         const q = quizData[qIndex];
@@ -766,31 +586,22 @@
             buttons[q.answer].classList.add('correct');
         }
 
-        // Disable all buttons for this question
         buttons.forEach(btn => btn.disabled = true);
-
-        scoreCounter.textContent = `Score: ${score}`;
+        scoreCounter.textContent = `النتيجة: ${score}`;
         nextBtn.disabled = false;
-
-        // Auto advance after short delay on mobile/desktop if desired, or let user click Next
     }
 
     function updateControls() {
-        questionCounter.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        questionCounter.textContent = `السؤال ${currentQuestion + 1} من ${quizData.length}`;
         progressBar.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
 
         prevBtn.disabled = currentQuestion === 0;
-
-        if (userAnswers[currentQuestion] !== null) {
-            nextBtn.disabled = false;
-        } else {
-            nextBtn.disabled = true;
-        }
+        nextBtn.disabled = userAnswers[currentQuestion] === null;
 
         if (currentQuestion === quizData.length - 1) {
-            nextBtn.textContent = 'Finish Quiz';
+            nextBtn.textContent = 'إنهاء الاختبار';
         } else {
-            nextBtn.textContent = 'Next';
+            nextBtn.textContent = 'التالي';
         }
     }
 
@@ -820,16 +631,16 @@
         resultsScreen.style.display = 'block';
         finalScore.textContent = `${score} / ${quizData.length}`;
 
-        let percentage = (score / quizData.length) * 100;
+        const percentage = (score / quizData.length) * 100;
         let msg = "";
         if (percentage >= 90) {
-            msg = "Outstanding! Excellent mastery of the lecture notes.";
+            msg = "ممتاز جداً! حفظك للمادة والتعاريف دقيق ومتميز.";
         } else if (percentage >= 75) {
-            msg = "Great job! Strong understanding of the material.";
+            msg = "جيد جداً! لديك إلمام قوي بمحتوى المحاضرات.";
         } else if (percentage >= 60) {
-            msg = "Good effort! Review the lecture notes to strengthen weak areas.";
+            msg = "جيد، لكن يُنصح بمراجعة التعاريف والتواريخ لرفع درجتك.";
         } else {
-            msg = "Keep studying! Review the lecture texts thoroughly and try again.";
+            msg = "تحتاج إلى إعادة قراءة الملزمة بتركيز أكبر وحفظ التعاريف بدقة.";
         }
         resultMessage.textContent = msg;
     }
@@ -838,18 +649,13 @@
         currentQuestion = 0;
         score = 0;
         userAnswers.fill(null);
-        scoreCounter.textContent = `Score: 0`;
-        
-        // Reset buttons and classes
-        questionsWrapper.innerHTML = '';
+        scoreCounter.textContent = `النتيجة: 0`;
         buildQuiz();
-
         resultsScreen.style.display = 'none';
         quizContainer.style.display = 'block';
         showQuestion(0);
     }
 
-    // Initialize quiz on load
     window.onload = buildQuiz;
 </script>
 
